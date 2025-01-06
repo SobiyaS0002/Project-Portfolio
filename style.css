@@ -30,7 +30,7 @@ header p {
   max-width: 800px;
   margin: 20px auto;
   background: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 3, 0.2);
 }
 
 /* Projects Section */
@@ -41,7 +41,7 @@ header p {
 }
 
 .project {
-  background: #e0e0e0;
+  background: #c0c0f1;
   padding: 15px;
   border-radius: 5px;
 }
@@ -59,7 +59,7 @@ form input, form textarea, form button {
 }
 
 form button {
-  background-color: #4CAF50;
+  background-color: #3b0e50;
   color: white;
   border: none;
   cursor: pointer;
@@ -67,7 +67,8 @@ form button {
 }
 
 form button:hover {
-  background-color: #45a049;
+  background-color: #c0c0f1;
+  color:#3b0e50 ;
 }
 
 /* Footer Section */
@@ -77,3 +78,5 @@ footer {
   background-color: #333;
   color: white;
 }
+
+
