@@ -1,28 +1,98 @@
 /* General Styles */
+
+*{
+  text-decoration: none;
+}
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  color: #224;
+  color: #123;
   background-color: #e8e8f9;
+ 
 }
 
-/* Header Section */
-header {
-  background-color: #3b0e61;
+/* Navbar Styles */
+
+.nav-div  {
+  background-color: black;
   color: white;
-  text-align: center;
-  padding: 50px 0;
+  padding: 0 15px;
+  display: flex;
+  flex-direction: row;
+  align-items:baseline;
+  justify-content: space-between;
 }
 
-header h1 {
+ .name{
+  text-align: start;
+  font-size: 20px;
+  font-weight: 600;
+  padding-left: 80px;
+}
+
+span{
+  color: rgb(192, 37, 37);
+}
+
+.nav-list, ul, li {
+  list-style-type: none;
+  justify-content:space-evenly;
+  align-items: center;
+  margin: 4px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  display: inline-block;
+ 
+} 
+
+ul li a{
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  margin-right: 30px;
+  padding: 8px;
+}
+
+li a:hover{
+  color: rgb(192, 37, 37);
+  text-decoration-line:underline;
+  transition: 2s;
+  
+}
+
+.nav-btn:hover{
+  background-color: rgb(192, 37, 37);
+  color: white;
+  transition: 0.9s;
+}
+
+.nav-btn{
+  background-color: white;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: bolder;
+  margin-right: 100px;
+  margin-left: 130px;
+  cursor: pointer;
+}
+
+/* header {
+  background-color: #224;
+  color: white;
+  /* text-align: center; 
+  padding: 20px 0;
+} */
+
+/* header h1 {
   margin: 0;
   font-size: 2.5em;
-}
+} */
 
-header p {
+/* header p {
   font-size: 1.2em;
-}
+} */
 
 /* About Section */
 #about, #projects, #contact {

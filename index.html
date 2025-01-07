@@ -7,23 +7,40 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <div class="container">
+    <!-- <header class="head"> -->
+
+        <nav calss="nav-bar ">
+            <div class="nav-div">
+                <h3 class="name">  Sobi<span>ya Khan </span> </h3>
+                <ul class="nav-list">
+                  <li><a href="index.html">Portfolio</a>
+                   </li>
+                   <li><a href="service.html">Services</a>
+                   </li>
+                   <li><a href="project.html">Projects</a>
+                   </li> 
+                   <li><a href="about.html">About me</a>
+                   </li>
+                   <button class="nav-btn">Contact me</button> 
+               </ul>
+              </div>
+            </nav>
+        <!-- <div class="container">
             <h1>Hi, I'm Sobiya Khan</h1>
             <p>Aspiring Frontend Developer | Seeking Internship</p>
-        </div>
-    </header>
+        </div> -->
+    <!-- </header> -->
 
-    <main>
-        <section id="about">
+    
+        <div id="about">
             <h2>About Me</h2>
             <p>
                 I am a self-motivated frontend developer with a passion for creating visually appealing
                 and user-friendly websites. Currently seeking an internship to enhance my skills and contribute to a team.
             </p>
-        </section>
+        </div>
 
-        <section id="projects">
+        <div id="projects">
             <h2>Projects</h2>
             <div class="projects-grid">
                 <div class="project">
@@ -39,9 +56,9 @@
                     <p>An interactive Clone app built with JavaScript.</p>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section id="contact">
+        <div id="contact">
             <h2>Contact Me</h2>
             <form id="contactForm">
                 <input type="text" id="name" placeholder="Your Name" required>
@@ -49,12 +66,12 @@
                 <textarea id="message" placeholder="Your Message" required></textarea>
                 <button type="submit">Send Message</button>
             </form>
-        </section>
-    </main>
+        </div>
+   
 
-    <footer>
+    
         <p>&copy; 2025 Sobiya Khan. All Rights Reserved.</p>
-    </footer>
+    
 
     <script src="script.js"></script>
 </body>
