@@ -9,17 +9,15 @@
 <body>
     
     <header>
-            <nav calss="nav-bar ">
+            <nav calss="nav-bar ">        
                 <div class="nav-div">
                     <h3 class="name">  Sobi<span>ya Khan </span> </h3>
                     <ul class="nav-list">
                       <li><a href="index.html">Portfolio</a>
                        </li>
-                       <li><a href="service.html">Services</a>
+                       <li><a href="#">Services</a>
                        </li>
-                       <li><a href="project.html">Projects</a>
-                       </li> 
-                       <li><a href="about.html">About me</a>
+                       <li><a href="#">Projects</a>
                        </li>
                        <button class="nav-btn">Contact me</button> 
                    </ul>
@@ -28,13 +26,74 @@
         </header>
 
         <main>
-            <div class="con"></div> 
-                <h1>  Sobiya  <br>
-                    Khan
+            <section class="con">
+                <p>Welcome</p>
+                <h1> I'm Sobiya  <br>
                 </h1>  
             <p>Aspiring Frontend Developer | Eager to Learn and Contribute </p> 
+            </section>
+
+            <section class="services">
+    <h2>My Services</h2>
+    <div class="services-grid">
+        <div class="service">
+            <h3>Web Development</h3>
+            <p>Design and develop responsive websites using modern tools and technologies.</p>
         </div>
+        <div class="service">
+            <h3>UI/UX Design</h3>
+            <p>Create visually appealing and user-friendly interfaces for an exceptional user experience.</p>
+        </div>
+        <div class="service">
+            <h3>JavaScript Development</h3>
+            <p>Build interactive web applications with a focus on performance and functionality.</p>
+        </div>
+        <div class="service">
+            <h3>Bug Fixing & Debugging</h3>
+            <p>Identify and resolve issues to ensure smooth and error-free application performance.</p>
+        </div>
+    </div>
+</section>
+
     
+        <section class="projects">
+            <h2>Projects</h2>
+            <div class="projects-grid">
+
+                <div class="project">
+                    <h3>Portfolio Website</h3>
+                    <p>A responsive portfolio website showcasing my skills and projects.</p>
+                </div>
+
+                <div class="project">
+                    <h3>Youtube Clone Project</h3>
+                    <p>An interactive Clone app built with JavaScript.</p>
+                </div>
+
+                <div class="project">
+                    <h3>E-commerce Landing Page</h3>
+                    <p>A mock landing page for an e-commerce platform with a focus on UI/UX.</p>
+                </div>
+
+                <div class="project">
+                    <h3>Login and Signup Page</h3>
+                    <p>A responsive portfolio website showcasing my skills and projects.</p>
+                </div>
+                
+                
+            </div>
+        </section>
+          
+        <section class="contact">
+            <h2>Contact Me</h2>
+            <form id="contactForm">
+                <input type="text" id="name" placeholder="Your Name" required>
+                <input type="email" id="email" placeholder="Your Email" required>
+                <textarea id="message" placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+          </div>
+        
         </main>
 
     <footer>
@@ -44,3 +103,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+

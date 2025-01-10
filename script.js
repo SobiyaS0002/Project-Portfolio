@@ -8,3 +8,5 @@ document.getElementById('contactForm').addEventListener('submit', function (even
   alert(`Thank you, ${name}! Your message has been sent.`);
   document.getElementById('contactForm').reset();
 });
+
+

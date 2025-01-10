@@ -2,22 +2,38 @@
 
 *{
   text-decoration: none;
-  
+  line-height: 1.5;
 }
 body {
   height: 100vh;
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  color: #123;
-  background-color: white;
+  color: #333;
+  background-color: #f5f5f5;
   height: 100%;
+}
+
+/* Font hierarchy */
+body p{
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+h1, h2{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: 700;
+  color: #333;
+}
+
+h2{
+  font-size: 36px;
 }
 
 /* Navbar Styles */
 
 .nav-div  {
-  background-color: black;
+  background-color: #004d99;
   color: white;
   padding: 0 15px;
   display: flex;
@@ -37,7 +53,7 @@ body {
 span{
   color: rgb(192, 37, 37);
 }
-
+  
 .nav-list, ul, li {
   list-style-type: none;
   justify-content:space-evenly;
@@ -52,16 +68,29 @@ span{
 ul li a{
   font-size: 16px;
   font-weight: 600;
-  color: white;
+  color: #e0e0e0;
   margin-right: 30px;
-  padding: 8px;
+  padding:18px;
 }
 
 li a:hover{
-  color: rgb(192, 37, 37);
+  color: #ff5733;
   text-decoration-line:underline;
-  transition: 2s;
+  transition: 0.3s;
   
+}
+
+.nav-btn{
+  background-color:  #004d99;
+  color: white;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 100px;
+  margin-left: 130px;
+  cursor: pointer;
+  border: none;
 }
 
 .nav-btn:hover{
@@ -70,66 +99,139 @@ li a:hover{
   transition: 0.9s;
 }
 
-.nav-btn{
-  background-color: white;
-  padding: 8px;
-  border-radius: 5px;
-  font-size: 14px;
-  font-weight: bolder;
-  margin-right: 100px;
-  margin-left: 130px;
-  cursor: pointer;
-}
 
+/* Main Portfolio section */
 main{
   height: 90%;
   margin: 0;
   padding: 0;
-  background-image: url("../Project-Portfolio/Images/white-background.jpg");
-  background-repeat: no-repeat;
-  background-position: right;
-  background-size: 100%;
-  
+}
+
+/* Portfolio Section */
+.con{
+  padding: 50px 20px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 h1{
-  margin-top: 100px;
+  margin-top: 0px;
   font-size: 100px;
   font-family:Georgia, 'Times New Roman', Times, serif;
-  margin-bottom: 0;
+  margin-bottom: 20px;
   padding-bottom: 0;
+  border-bottom: 2px solid #bdb8b8;
+  color: #333;
 }
 
 p{
-  color:brown ;
+  margin-bottom: 4px;
+  font-size: 1em;
+  color: #666;
+  line-height: 1.6;
+  font-size: 36px;
 }
 
+
 /* About Section */
-#about, #projects, #contact {
-  padding: 20px; 
-  max-width: 800px;
-  margin: 20px auto;
-   background: white;
+
+/* Service Section */
+.services {
+  padding: 50px 20px;
+  background-color: #004d99;
+  color: white;
+  text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 3, 0.2);
 }
 
+.services h2 {
+  font-size: 2em;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: rgb(192, 37, 37);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.service {
+  background-color: #e0e0e0;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(241, 238, 238, 0.1);
+}
+
+.service h3 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: rgb(192, 37, 37);;
+}
+
+.service p {
+  font-size: 1em;
+  color: #666;
+  line-height: 1.6;
+}
+
 /* Projects Section */
+.projects{
+  background-color: white;
+  color:  black;
+  padding:50px 10px; 
+  text-align: center;
+  margin: 20px auto;
+  
+}
+
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .project {
-  background: #c0c0f1;
-  padding: 15px;
+  background: white;
   border-radius: 5px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
 }
+
+.projects h2{
+  /* color: rgb(192, 37, 37); */
+  text-align: center;
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.project h3{
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.project p{
+  font-size: 1em;
+  color: #666;
+  line-height: 1.6;
+}
+
 
 /* Contact Section */
 form {
   display: flex;
   flex-direction: column;
+  margin-top: 0;
+  padding-bottom: 20px;
 }
 
 form input, form textarea, form button {
@@ -158,11 +260,9 @@ footer {
   background-color: #224;
   color: white;
   margin-bottom: 0;
-  margin-top: 90%;
+  /* margin-top: 90%; */
   position: relative;
   height: 100%;
   display: flex;
-  
 }
-
 
