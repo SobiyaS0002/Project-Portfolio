@@ -22,8 +22,41 @@ html, body {
   background-color: #f5f5f5;
 }
 
+.scroll-top{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  /* display: none; */
+  border-radius: 50%;
+  background-color: #4b7b6a;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  animation: scrll-up 0.5s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 1000;  
+}
+
+.scroll-top:hover{
+  background-color: #6ea391;
+}
+
+@keyframes scrll-up{
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /* Font hierarchy */
-body p{
+body {
   font-size: 16px;
   line-height: 1.6;
   color: #666;
@@ -147,6 +180,15 @@ p{
   font-size: 36px;
 }
 
+section{
+  padding: 80px 20px;
+  margin: 20px auto;
+}
+
+nav, header, footer{
+  padding: 20px;
+  padding: bottom 20px;
+}
 
 /* About Section */
 
@@ -290,6 +332,8 @@ form button:hover {
 footer {
   text-align: center;
   padding: 36px;
+  /* padding-top: 50px;
+  padding-bottom: 20px; */
   background-color: #333;
   color: white;
   margin:0;
