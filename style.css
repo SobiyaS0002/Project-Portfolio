@@ -7,6 +7,11 @@
   box-sizing: border-box;
 }
 
+html{
+  scroll-behavior: smooth;
+}
+
+
 html, body {
   height: 100%;
   margin: 0;
@@ -102,20 +107,7 @@ li a:hover{
   
 }
 
-.nav-btn{
-  background-color: #4b7b6a;
-  color: white;
-  padding: 8px;
-  border-radius: 5px;
-  font-size: 14px;
-  font-weight: bold;
-  margin-right: 100px;
-  margin-left: 130px;
-  cursor: pointer;
-  border: none;
-}
-
-.nav-btn:hover{
+.nav-cont li a:hover{
   background-color:#6ea391;
   color: white;
   transition: 0.9s;
@@ -230,7 +222,7 @@ p{
 }
 
 .project:hover{
-  transform: scale(1.3);
+  transform: scale(1.2);
   z-index: 2;
 }
 
