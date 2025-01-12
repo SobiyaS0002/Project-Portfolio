@@ -3,12 +3,15 @@
 *{
   text-decoration: none;
   line-height: 1.5;
-  margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-body {
-  height: 100vh;
+
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
   font-family: Arial, sans-serif;
   color: #333;
   background-color: #f5f5f5;
@@ -121,7 +124,7 @@ li a:hover{
 
 /* Main Portfolio section */
 main{
-  height: 90%;
+  flex: 1;
   margin: 0;
   padding: 0;
 }
@@ -284,13 +287,54 @@ footer {
   padding: 36px;
   background-color: #333;
   color: white;
-  margin-bottom: 0;
-  margin-top: 95%;
-  /* position: relative; */
-  height: 100%;
-  display: flex;
+  margin:0;
+  position: relative;
+  width: 100%;
 }
 
+.footer-con{
+  width: 100%;
+  padding: 50px 10px 5px;
+}
+
+.social-icons{
+  display: flex;
+  justify-content: center;
+}
+
+.social-icons a i{
+  font-size: 2em;
+  color: black;
+  opacity: 0.9;
+  text-decoration: none;
+  padding: 10px;
+  background-color: white;
+  margin: 10px;
+  border-radius: 50%;
+}
+
+.social-icons a i:hover{
+  background-color: #333;
+  transition: 0.5s;
+}
+
+.footer-bottom{
+  background-color: #333;
+  padding: 30px;
+  text-align: center;
+}
+
+.footer-bottom p{
+  color: white;
+}
+
+.designer{
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 400;
+  margin: 0px 5px;
+}
 
 
 
