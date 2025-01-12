@@ -37,6 +37,13 @@ h3 {
 
 /* Navbar Styles */
 
+.nav-bar{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 15px;
+}
+
 .nav-div  {
   background-color: #333;
   color: white;
@@ -58,6 +65,12 @@ h3 {
 
 .name span{
   color: #4b7b6a;
+}
+
+.nav-list{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
 }
   
 .nav-list, ul, li {
@@ -278,3 +291,50 @@ footer {
   display: flex;
 }
 
+
+
+
+
+/* CSS for mobile-responsive navbar */
+.nav-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 15px;
+}
+
+.hamburger {
+  display: none; /* Initially hide the hamburger icon */
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .nav-list {
+      display: none; /* Hide menu items on mobile */
+      flex-direction: column;
+      width: 100%;
+      background-color: #333;
+      position: absolute;
+      top: 60px;
+      left: 0;
+  }
+
+  .nav-list.active {
+      display: flex; /* Show the menu when toggled */
+  }
+
+  .hamburger {
+      display: block; /* Show hamburger icon on mobile */
+  }
+
+  .nav-btn {
+      margin-left: auto;
+  }
+}

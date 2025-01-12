@@ -9,4 +9,9 @@ document.getElementById('contactForm').addEventListener('submit', function (even
   document.getElementById('contactForm').reset();
 });
 
+// JavaScript to toggle the mobile menu
+function toggleMenu() {
+  const navList = document.querySelector('.nav-list');
+  navList.classList.toggle('active');
+}
 
