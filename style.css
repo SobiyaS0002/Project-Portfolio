@@ -28,7 +28,6 @@ html, body {
   right: 20px;
   width: 50px;
   height: 50px;
-  /* display: none; */
   border-radius: 50%;
   background-color: #4b7b6a;
   color: white;
@@ -210,8 +209,8 @@ nav, header, footer{
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -222,6 +221,11 @@ nav, header, footer{
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 4px 6px rgba(241, 238, 238, 0.1);
+}
+
+.service:hover{
+  transform: scale(1.2);
+  z-index: 2;
 }
 
 .service h3 {
@@ -248,8 +252,8 @@ nav, header, footer{
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -266,13 +270,6 @@ nav, header, footer{
 .project:hover{
   transform: scale(1.2);
   z-index: 2;
-}
-
-.project img{
-  display: block;
-  width: 100%;
-  border-radius: 5px;
-  height: 300px;
 }
 
 .projects h2{
@@ -301,6 +298,11 @@ form {
   flex-direction: column;
   margin-top: 0;
   padding-bottom: 20px;
+}
+
+.contact h2{
+  text-align: center;
+  color: #4b7b6a;
 }
 
 form input, form textarea{
