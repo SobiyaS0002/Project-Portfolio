@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="style.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    
 </head>
 <body>
     <header>
@@ -93,14 +95,14 @@
         </section>
           
         <section class="contact" id="contact-id">
-            <form id="contactForm">
+            <form id="contactForm" >
             <h2>Contact Me</h2>
-                <input type="text" id="name" placeholder="Your Name" required>
-                <input type="email" id="email" placeholder="Your Email" required>
-                <textarea id="message" placeholder="Your Message" required></textarea>
+                <input type="text" id="name" placeholder="Your Name" autocomplete="on" required>
+                <input type="email" id="email" placeholder="Your Email" autocomplete="on" required>
+                <textarea id="message" placeholder="Your Message" autocomplete="on" required></textarea>
                 <button type="submit">Send Message</button>
             </form>
-          </div>
+        </section>
         </main>
 
     <footer>
@@ -119,7 +121,8 @@
         
     </footer>
         
-    
+    <script src="script.js"></script>
 </body>
+
 </html>
 
