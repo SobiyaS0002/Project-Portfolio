@@ -4,8 +4,10 @@
 
 // Contact Form Submit Handling 
 
+
 // select the form by its ID
 var con_form = document.getElementById('contactForm')
+
 // Add an event listener for the form submission
 con_form.addEventListener('submit', function(event){
   event.preventDefault()     // It prevents form from autosubmitting
@@ -16,3 +18,14 @@ con_form.addEventListener('submit', function(event){
   var u_msg=document.getElementById('message').value
   console.log('Message: ' + u_msg)   // log the value of te message field
 })
+
+
+// Add an event listener for form resetting
+con_form.addEventListener('reset', function(event){
+  console.log("cleared")
+})
+
+
+
+
+
