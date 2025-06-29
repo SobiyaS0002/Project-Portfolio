@@ -1,129 +1,379 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="xicon" href="../Images/portfolio-favicon.jpg">
-    <title>Portfolio - Frontend Developer</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sobiya Khan - Frontend Developer</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #1a1d1a;
+      color: #e8f5e9;
+      min-height: 100vh;
+    }
 
-    
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 50px;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #60ad92;
+    }
+
+    .nav-links a {
+      color: #a5d6a7;
+      margin: 0 15px;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #ffffff;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: #8bc34a;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 100px 20px;
+    }
+
+    .greeting {
+      font-size: 2.5rem;
+      font-weight: 600;
+    }
+
+    .name {
+      color: #72af75;
+    }
+
+    .role {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin: 10px 0;
+      color: #a5d6a7;
+    }
+
+    .description {
+      max-width: 600px;
+      margin: 20px auto;
+      font-size: 1rem;
+      color: #c5e1a5;
+    }
+
+    .buttons {
+      margin-top: 30px;
+    }
+
+    .btn {
+      border: 1px solid #66bb6a;
+      padding: 10px 20px;
+      text-decoration: none;
+      color: #a5d6a7;
+      margin-right: 20px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #66bb6a;
+      color: #1a1d1a;
+    }
+
+    .icon {
+      font-size: 1.5rem;
+      margin: 0 10px;
+      color: #81c784;
+      transition: 0.3s;
+    }
+
+    .icon:hover {
+      color: #ffffff;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      color: #a5d6a7;
+      margin: 40px 0 20px;
+      font-weight: bold;
+    }
+
+    .projects {
+        /* height: 80%; */
+      padding: 40px 20px;
+      min-height: 500px;
+      margin-top: 120px;
+      width: 75%;
+    }
+
+    .projects:hover {
+      background-color: #1a1d1a;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .project-card {
+      background-color: #263326;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 10px 15px #263326;
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .project-card h3 {
+      color: #aed581;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .project-card p {
+      font-size: 0.95rem;
+      color: #c5e1a5;
+      margin-bottom: 15px;
+    }
+
+    .tech {
+      font-weight: bold;
+      color: #dce775;
+      margin-bottom: 10px;
+    }
+
+    .project-icons a {
+      margin: 0 10px;
+      color: #81c784;
+      font-size: 1.2rem;
+      transition: 0.3s;
+    }
+
+    .project-icons a:hover {
+      color: #ffffff;
+    }
+
+    .skills {
+        min-height: 600px;
+        width: 100%;
+      text-align: center;
+      /* padding: 40px 20px; */
+      background-color: #1a1d1a;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 40px;
+    }
+
+    .skill-tags span {
+      background-color: #2d3a2d;
+      padding: 10px 15px;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      color: #dcedc8;
+      transition: 0.3s;
+    }
+
+    .skill-tags span:hover {
+      background-color: #66bb6a;
+      color: #fff;
+    }
+
+    .scroll-top-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: none;
+      color: #81c784;
+      font-size: 1.5rem;
+      text-decoration: none;
+      z-index: 999;
+      transition: color 0.3s;
+    }
+
+    .scroll-top-btn:hover {
+      color: #ffffff;
+    }
+
+    .contact {
+      text-align: center;
+      /* padding: 60px 20px; */
+      background-color: #1a1d2e;
+      color: #dcedc8;
+      
+    }
+
+    .contact-btn {
+  display: inline-block;
+  margin-top: 20px;
+  border: 1px solid #81c784;
+  padding: 10px 20px;
+  color: #81c784;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 4px;
+  transition: 0.3s;
+}
+
+.contact-btn:hover {
+  background-color: #81c784;
+  color: #1a1d2e;
+}
+
+
+    .footer {
+      text-align: center;
+      padding: 30px 10px;
+      color: #a5d6a7;
+      font-size: 0.9rem;
+      background-color: #263326;
+    }
+
+    .footer .highlight {
+      font-weight: bold;
+      color: #c5e1a5;
+    }
+  </style>
 </head>
 <body>
-    <header>
-            <nav calss="nav-bar ">        
-                <div class="nav-div">
-                    <h3 class="name">  Sobi<span>ya Khan </span> </h3>
-                    <ul class="nav-list">
-                      <li><a href="#portfolio-id">Portfolio</a>
-                       </li>
-                       <li><a href="#service-id">Services</a>
-                       </li>
-                       <li><a href="#project-id">Projects</a>
-                       </li>
-                       <li><a class="nav-cont" href="#contact-id">Contact me</li> </a>
-                                          </ul>
-                  </div>
-                </nav>    
-        </header>
+  <header class="navbar">
+    <div class="logo">SobiyaKhan.</div>
+    <nav class="nav-links">
+      <a href="#projects">projects</a>
+      <a href="#skills">skills</a>
+      <a href="#contact">contact</a>
+      <!-- <button class="theme-toggle">🌙</button> -->
+    </nav>
+  </header>
 
-        <main>
-            <section class="con" id="portfolio-id">
-                <p>Welcome</p>
-                <h1> I'm Sobiya  <br>
-                </h1>  
-            <p>Aspiring Frontend Developer | Eager to Learn and Contribute </p>
-            
-            <a href="#">
-                <img class="scroll-top" src="../Images/top-button.png" class="scroll-top" alt="Back-to-top button">
-            </a>
+  <main class="hero">
+    <p class="greeting">Hi, I am</p>
+    <h2 class="role">A Frontend Developer.</h2>
+    <p class="description">AI-Integrated Web Solutions | BCA Graduate (90%+) | Eager to Learn and Contribute</p>
 
-            </section>
-
-            <section class="services" id="service-id">
-    <h2>My Services</h2>
-    <div class="services-grid">
-        <div class="service">
-            <h3>Web Development</h3>
-            <p>Design and develop responsive websites using modern tools and technologies.</p>
-        </div>
-        <div class="service">
-            <h3>UI/UX Design</h3>
-            <p>Create visually appealing and user-friendly interfaces for an exceptional user experience.</p>
-        </div>
-        <div class="service">
-            <h3>JavaScript Development</h3>
-            <p>Build interactive web applications with a focus on performance and functionality.</p>
-        </div>
-        <div class="service">
-            <h3>Bug Fixing & Debugging</h3>
-            <p>Identify and resolve issues to ensure smooth and error-free application performance.</p>
-        </div>
-       
+    <div class="buttons">
+      <a href="Images/resume.pdf" class="btn">resume</a>
     </div>
+
+    <!-- Social Icons -->
+    <div class="buttons">
+      <a href="https://github.com/SobiyaS0002?tab=repositories" target="_blank"><i class="fab fa-github icon"></i></a>
+      <a href="https://www.linkedin.com/in/sobiya-khan/" target="_blank"><i class="fab fa-linkedin icon"></i></a>
+    </div>
+  </main>
+
+  <!-- Projects Section -->
+<section id="projects" class="projects">
+  <h2 class="section-title">PROJECTS</h2>
+  <div class="project-grid">
+    <div class="project-card">
+      <h3>Doctor Appointment Web App</h3>
+      <p>Designed a responsive UI and built appointment logic using React and PHP. Enabled easy booking and admin-side scheduling.</p>
+      <div class="tech">React &nbsp; PHP &nbsp; Responsive UI</div>
+      <div class="project-icons">
+        <a href="https://github.com/SobiyaS0002/doctor-appointment-react-php" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+      </div>
+    </div>
+    <div class="project-card">
+      <h3>EV Dashboard Project</h3>
+      <p>Real-time dashboard simulating EV station usage and battery health. Built in 6 hours using ChatGPT-assisted logic for an MVP demo.</p>
+      <div class="tech">React &nbsp; AI Tools &nbsp; Startup MVP</div>
+      <div class="project-icons">
+        <a href="https://github.com/SobiyaS0002/EV-Project" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+      </div>
+    </div>
+    <div class="project-card">
+      <h3>Waste Management Dashboard</h3>
+      <p>Built a dashboard to track ingredient waste and optimize kitchen inventory for a real startup. Focused on UI-driven insight delivery.</p>
+      <div class="tech">React &nbsp; Data Dashboard &nbsp; UX</div>
+      <div class="project-icons">
+        <a href="https://github.com/SobiyaS0002/kitchen-iq-insights-hub" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+      </div>
+    </div>
+  </div>
 </section>
 
-    
-        <section class="projects" id="project-id">
-            <h2>Projects</h2>
-            <div class="projects-grid">
+    <!-- Skills Section -->
+<section id="skills" class="skills">
+  <h2 class="section-title">SKILLS</h2>
+  <div class="skill-tags">
+    <span>HTML5</span><span>CSS3</span><span>JavaScript (ES6+)</span><span>React.js</span>
+    <span>Responsive Design</span><span>Git</span><span>GitHub</span><span>VS Code</span>
+    <span>Figma</span><span>FontAwesome</span><span>PHP (Basic)</span><span>React Hooks</span>
+  </div>
+  <div class="skill-tags">
+    <span>AI Tools</span><span>ChatGPT</span><span>GitHub Copilot</span><span>Prompt Engineering</span>
+    <span>Team Collaboration</span><span>Agile Basics</span><span>Independent Contributor</span><span>Fast Learner</span>
+    <span>UI Components</span><span>Debugging</span><span>Workflow-Focused</span><span>Adaptable</span>
+  </div>
+</section>
 
-                <div class="project">
-                    <h3>Portfolio Website</h3>
-                    <p>A responsive portfolio website showcasing my skills and projects.</p>
-                </div>
+  
+  <!-- Scroll to Top Button -->
+  <a href="#" class="scroll-top-btn"><i class="fas fa-arrow-up"></i></a>
 
-                <div class="project">
-                    <h3>Youtube Clone Project</h3>
-                    <p>An interactive Clone app built with JavaScript.</p>
-                </div>
+  <!-- Contact Section -->
+<section id="contact" class="projects">
+  <h2 class="section-title">CONTACT</h2>
+  <div class="project-grid">
+    <div class="project-card">
+      <h3>Get in Touch</h3>
+      <p>I'm always open to discussing new projects, ideas, or opportunities to be part of your team.</p>
+      <a href="#" class="contact-btn" onclick="showEmail(event)">Click to Reveal Email</a>
+      <p id="email-display" style="display:none; margin-top: 15px; font-weight: bold; color: #c5e1a5;">sobiya080022@gmail.com</p>
+    </div>
+  </div>
+</section>
 
-                <div class="project">
-                    <h3>E-commerce Landing Page</h3>
-                    <p>A mock landing page for an e-commerce platform with a focus on UI/UX.</p>
-                </div>
 
-                <div class="project">
-                    <h3>Login and Signup Page</h3>
-                    <p>A responsive portfolio website showcasing my skills and projects.</p>
-                </div>
-                
-                
-            </div>
-        </section>
-          
-        <section class="contact" id="contact-id">
-            <form id="contactForm" >
-            <h2>Contact Me</h2>
-                <input type="text" id="name" placeholder="Your Name" autocomplete="on" required>
-                <input type="email" id="email" placeholder="Your Email" autocomplete="on" required>
-                <textarea id="message" placeholder="Your Message" autocomplete="on" required></textarea>
-                <button type="submit">Send Message</button>
-                <button type="reset">Reset</button>
-            </form>
-        </section>
-        </main>
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Created By <span class="highlight">Sobiya Khan</span> | © All Rights Reserved</p>
+  </footer>
 
-    <footer>
-        <div class="footer-con">
-            <div class="social-icons">
-                <a href="">
-                    <i class="fa-brands fa-linkedin"></i>
-                    <i class="fa-brands fa-github"></i>
-                </a>
-            </div>
-        </div>
+  <script>
+  function showEmail(event) {
+    event.preventDefault();
+    const emailElement = document.getElementById('email-display');
+    emailElement.style.display = 'block';
+  }
+</script>
 
-        <div class="footer-bottom">
-            <p>Copywright &copy; Designed by <span class="designer">Sobiya Khan.</span>  All Rights Reserved.</p>
-        </div>
-        
-    </footer>
-        
-    <script src="script.js"></script>
+
 </body>
-
 </html>
-
