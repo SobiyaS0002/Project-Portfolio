@@ -15,6 +15,11 @@
       box-sizing: border-box;
     }
 
+    html {
+  scroll-behavior: smooth;
+}
+
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #ffffff; /* white background */
@@ -264,6 +269,88 @@
       font-weight: bold;
       color: #0a1a2f;
     }
+
+    /* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 15px 20px;
+    text-align: center;
+  }
+
+  .hero {
+    padding: 60px 15px;
+  }
+
+  .greeting {
+    font-size: 2rem;
+  }
+
+  .role {
+    font-size: 3rem;   /* smaller on mobile */
+  }
+
+  .description {
+    font-size: 0.95rem;
+    padding: 0 10px;
+  }
+
+  .projects,
+  .skills,
+  .contact {
+    width: 90%;        /* full width on mobile */
+    padding: 20px 15px;
+  }
+
+  .project-grid {
+    grid-template-columns: 1fr; /* stack projects */
+    gap: 20px;
+  }
+
+  .skill-tags {
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .skill-tags span {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+
+  .scroll-top-btn {
+    bottom: 20px;
+    right: 20px;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .greeting {
+    font-size: 1.6rem;
+  }
+
+  .role {
+    font-size: 2.2rem;
+    letter-spacing: 1px;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    margin-right: 10px;
+  }
+
+  .icon {
+    font-size: 1.2rem;
+    margin: 0 5px;
+  }
+}
+
+
   </style>
 </head>
 <body>
