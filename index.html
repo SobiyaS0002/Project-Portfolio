@@ -12,6 +12,8 @@
     />
 
     <style>
+      @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;500;600;700&display=swap");
+
       * {
         margin: 0;
         padding: 0;
@@ -23,281 +25,402 @@
       }
 
       body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background: radial-gradient(circle at top, #111111, #0d0d0d);
-        color: #e6e6e6;
+        font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+        background: radial-gradient(
+          circle at 50% 0%,
+          #1a0b2e 0%,
+          #080410 70%,
+          #000000 100%
+        );
+        color: #f1f1f6;
         min-height: 100vh;
+        overflow-x: hidden;
+        line-height: 1.6;
       }
 
       /* NAVBAR */
       .navbar {
         display: flex;
         justify-content: space-between;
-        padding: 24px 60px;
+        padding: 30px 8%;
         align-items: center;
+        background: linear-gradient(
+          to bottom,
+          rgba(8, 4, 16, 0.8),
+          transparent
+        );
+        backdrop-filter: blur(12px);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
       }
 
       .logo {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #f5c542;
+        font-size: 1.1rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: #ffffff;
+        text-transform: uppercase;
+        background: linear-gradient(90deg, #ff41b4, #ff8ae2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
 
       .nav-links a {
-        color: #cccccc;
-        margin: 0 15px;
+        color: #a3a3bc;
+        margin: 0 20px;
         text-decoration: none;
-        font-size: 0.95rem;
-        transition: 0.3s;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
       }
 
       .nav-links a:hover {
-        color: #f5c542;
+        color: #ff41b4;
+        text-shadow: 0 0 10px rgba(255, 65, 180, 0.4);
       }
 
       /* HERO */
       .hero {
         text-align: center;
-        padding: 120px 20px 100px;
-        letter-spacing: 1px;
+        padding: 160px 20px 120px;
+        max-width: 900px;
+        margin: 0 auto;
+        position: relative;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        height: 300px;
+        background: #ff41b4;
+        filter: blur(140px);
+        opacity: 0.15;
+        pointer-events: none;
       }
 
       .greeting {
-        font-size: 2.2rem;
-        font-weight: 500;
-        color: #cccccc;
+        font-size: 1.5rem;
+        font-weight: 400;
+        color: #a3a3bc;
+        margin-bottom: 10px;
+        letter-spacing: 2px;
       }
 
       .role {
-        font-size: 5rem;
-        font-weight: 200;
-        letter-spacing: 2px;
-        color: #f5c542;
-        margin: 10px 0;
+        font-size: 5.5rem;
+        font-weight: 700;
+        letter-spacing: -2px;
+        color: #ffffff;
+        margin: 5px 0 25px;
+        line-height: 1.1;
+        background: linear-gradient(135deg, #ffffff 30%, #a3a3bc 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
 
       .description {
-        max-width: 600px;
+        max-width: 640px;
         margin: 25px auto;
-        font-size: 1rem;
-        color: #b3b3b3;
-        line-height: 1.6;
+        font-size: 1.15rem;
+        color: #b4b4c6;
+        line-height: 1.7;
+        font-weight: 400;
       }
 
       /* BUTTONS + ICONS */
       .buttons {
-        margin-top: 35px;
+        margin-top: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
       }
 
       .btn {
-        border: 1px solid #f5c542;
-        padding: 10px 22px;
+        background: linear-gradient(90deg, #ff41b4, #e02694);
+        padding: 12px 30px;
         text-decoration: none;
-        color: #f5c542;
-        margin-right: 15px;
-        font-weight: 500;
-        transition: 0.3s;
+        color: #ffffff;
+        font-weight: 600;
+        border-radius: 50px;
+        box-shadow: 0 4px 20px rgba(255, 65, 180, 0.3);
+        transition: all 0.3s ease;
+        border: none;
       }
 
       .btn:hover {
-        background-color: #f5c542;
-        color: #0d0d0d;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 25px rgba(255, 65, 180, 0.5);
+        background: linear-gradient(90deg, #ff5cc3, #f13ca5);
       }
 
       .icon {
-        font-size: 1.4rem;
-        margin: 0 10px;
-        color: #cccccc;
-        transition: 0.3s;
+        font-size: 1.6rem;
+        color: #a3a3bc;
+        transition: all 0.3s ease;
+        padding: 10px;
+        border-radius: 50px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
       }
 
       .icon:hover {
-        color: #f5c542;
-        transform: translateY(-2px);
+        color: #ff41b4;
+        background: rgba(255, 65, 180, 0.1);
+        border-color: rgba(255, 65, 180, 0.3);
+        transform: translateY(-3px) rotate(5deg);
       }
 
       /* SECTION TITLE */
       .section-title {
         text-align: center;
-        font-size: 1.9rem;
-        color: #f5c542;
-        margin: 60px 0 30px;
-        font-weight: 600;
-        letter-spacing: 1px;
-        background: linear-gradient(90deg, #f5c542, #ffdf80);
+        font-size: 2rem;
+        color: #ffffff;
+        margin: 100px 0 50px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        background: linear-gradient(90deg, #ffffff, #a3a3bc);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        position: relative;
       }
 
       .section-title::after {
         content: "";
         display: block;
-        width: 50px;
-        height: 2px;
-        background: #f5c542;
-        margin: 10px auto 0;
-        transition: 0.3s;
+        width: 40px;
+        height: 3px;
+        background: linear-gradient(90deg, #ff41b4, #ff8ae2);
+        border-radius: 2px;
+        margin: 12px auto 0;
+        transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       }
 
       .section-title:hover::after {
-        width: 80px;
+        width: 70px;
       }
 
-      .section-divider {
-        width: 60%;
-        height: 1px;
-        background: rgba(245, 197, 66, 0.2);
-        margin: 40px auto;
-      }
-
-      /* PROJECTS */
+      /* PROJECTS GRID */
       .projects {
-        padding: 60px 20px;
-        min-height: 350px;
+        padding: 40px 0;
+        width: 84%;
+        max-width: 1200px;
         margin: 0 auto;
-        width: 75%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
       }
 
       .project-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 25px;
-        max-width: 1000px;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 30px;
         width: 100%;
       }
 
-      /* CARD */
+      /* CARD STRUCTURING */
       .project-card {
-        background-color: #141414;
-        padding: 22px;
-        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.02);
+        padding: 35px;
+        border-radius: 16px;
         text-align: left;
-        border: 1px solid rgba(245, 197, 66, 0.08);
-        transition: all 0.3s ease;
-        cursor: pointer;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
       }
 
       .project-card:hover {
-        transform: translateY(-6px) scale(1.02);
-        border: 1px solid rgba(245, 197, 66, 0.3);
-        box-shadow: 0 10px 25px rgba(245, 197, 66, 0.15);
+        transform: translateY(-8px);
+        background: rgba(255, 255, 255, 0.04);
+        border-color: rgba(255, 65, 180, 0.3);
+        box-shadow:
+          0 20px 40px rgba(0, 0, 0, 0.4),
+          0 0 30px rgba(255, 65, 180, 0.05);
       }
 
       .project-card h3 {
-        color: #f5c542;
-        font-size: 1.15rem;
-        margin-bottom: 10px;
+        color: #ffffff;
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 18px;
+        line-height: 1.4;
       }
 
       .project-card p {
-        font-size: 0.9rem;
-        color: #bfbfbf;
-        margin-bottom: 10px;
-        line-height: 1.5;
+        font-size: 0.95rem;
+        color: #b4b4c6;
+        margin-bottom: 12px;
+        line-height: 1.6;
+      }
+
+      .project-card p strong {
+        color: #ff41b4;
+        font-weight: 600;
       }
 
       .tech {
-        font-weight: 500;
-        color: #999999;
-        margin-top: 10px;
-        font-size: 0.85rem;
+        font-weight: 600;
+        color: #ff8ae2;
+        margin-top: 15px;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        background: rgba(255, 65, 180, 0.08);
+        padding: 6px 12px;
+        border-radius: 6px;
+        display: inline-block;
+        width: fit-content;
       }
 
       /* SKILLS */
       .skills {
-        min-height: 350px;
-        width: 75%;
+        width: 84%;
+        max-width: 900px;
         text-align: center;
-        padding: 60px 20px;
+        padding: 40px 0;
         margin: 0 auto;
       }
 
       .skill-tags {
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 12px;
         justify-content: center;
-        margin-top: 30px;
+        margin-top: 20px;
+        margin-bottom: 20px;
       }
 
       .skill-tags span {
-        background-color: #1a1a1a;
-        padding: 8px 14px;
-        border-radius: 4px;
-        font-size: 0.85rem;
-        color: #cccccc;
-        border: 1px solid rgba(245, 197, 66, 0.08);
-        transition: 0.3s;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 10px 20px;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #e1e1e6;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       }
 
       .skill-tags span:hover {
-        background-color: #f5c542;
-        color: #0d0d0d;
-        transform: translateY(-2px);
+        background: linear-gradient(90deg, #ff41b4, #e02694);
+        color: #ffffff;
+        border-color: transparent;
+        transform: scale(1.08) translateY(-2px);
+        box-shadow: 0 10px 20px rgba(255, 65, 180, 0.2);
       }
 
       /* CONTACT */
       .contact {
-        min-height: 300px;
-        width: 75%;
+        width: 84%;
+        max-width: 600px;
         text-align: center;
-        padding: 60px 20px;
+        padding: 40px 0 100px;
         margin: 0 auto;
+      }
+
+      .contact .project-card {
+        text-align: center;
+        align-items: center;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.03) 0%,
+          rgba(255, 255, 255, 0.01) 100%
+        );
+        padding: 45px 30px;
       }
 
       .contact-btn {
         display: inline-block;
-        margin-top: 20px;
-        border: 1px solid #f5c542;
-        padding: 10px 20px;
-        color: #f5c542;
+        margin-top: 25px;
+        background: transparent;
+        border: 2px solid #ff41b4;
+        padding: 12px 28px;
+        color: #ffffff;
         text-decoration: none;
-        font-weight: 500;
-        border-radius: 4px;
-        transition: 0.3s;
+        font-weight: 600;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 65, 180, 0.1);
       }
 
       .contact-btn:hover {
-        background-color: #f5c542;
-        color: #0d0d0d;
+        background: #ff41b4;
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 65, 180, 0.4);
+      }
+
+      #email-display {
+        background: rgba(255, 255, 255, 0.04);
+        padding: 12px 24px;
+        border-radius: 8px;
+        border: 1px dashed rgba(255, 65, 180, 0.4);
+        font-family: monospace;
+        font-size: 1.1rem;
+        letter-spacing: 0.5px;
+        animation: fadeIn 0.5s ease forwards;
       }
 
       /* FOOTER */
       .footer {
         text-align: center;
-        padding: 25px 10px;
-        color: #999999;
-        font-size: 0.85rem;
-        background-color: #111111;
+        padding: 40px 20px;
+        color: #6c6c89;
+        font-size: 0.9rem;
+        background-color: #040208;
+        border-top: 1px solid rgba(255, 255, 255, 0.02);
       }
 
       .footer .highlight {
-        color: #f5c542;
+        color: #ffffff;
+        font-weight: 600;
       }
 
-      /* SCROLL BUTTON */
+      /* SCROLL TOP BUTTON */
       .scroll-top-btn {
         position: fixed;
-        bottom: 25px;
-        right: 25px;
-        color: #cccccc;
-        font-size: 1.3rem;
+        bottom: 35px;
+        right: 35px;
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(8px);
+        width: 48px;
+        height: 48px;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
         text-decoration: none;
-        transition: 0.3s;
+        transition: all 0.3s ease;
+        z-index: 99;
       }
 
       .scroll-top-btn:hover {
-        color: #f5c542;
+        background: #ff41b4;
+        border-color: transparent;
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(255, 65, 180, 0.3);
       }
 
       /* FADE IN ANIMATION */
       .fade-in {
         opacity: 0;
-        transform: translateY(20px);
-        animation: fadeUp 0.8s ease forwards;
+        transform: translateY(30px);
+        animation: fadeUp 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
       }
 
       @keyframes fadeUp {
@@ -307,19 +430,41 @@
         }
       }
 
-      /* MOBILE */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* RESPONSIVENESS */
+      @media (max-width: 992px) {
+        .role {
+          font-size: 4rem;
+        }
+      }
+
       @media (max-width: 768px) {
         .navbar {
           flex-direction: column;
-          padding: 15px 20px;
+          gap: 15px;
+          padding: 20px;
         }
 
         .hero {
-          padding: 70px 15px;
+          padding: 100px 20px 60px;
         }
 
         .role {
-          font-size: 2.8rem;
+          font-size: 3rem;
+        }
+
+        .project-grid {
+          grid-template-columns: 1fr;
         }
 
         .projects,
@@ -327,95 +472,49 @@
         .contact {
           width: 90%;
         }
-
-        .project-grid {
-          grid-template-columns: 1fr;
-        }
       }
 
       @media (max-width: 480px) {
         .role {
-          font-size: 2.2rem;
+          font-size: 2.4rem;
         }
 
         .section-title {
-          font-size: 1.4rem;
+          font-size: 1.6rem;
+        }
+
+        .project-card {
+          padding: 25px;
         }
       }
     </style>
   </head>
   <body>
     <header class="navbar">
-      <div class="logo">Developer_Online.</div>
-      <!-- <nav class="nav-links">
-      <a href="#projects">projects</a>
-      <a href="#skills">skills</a>
-      <a href="#contact">contact</a>
-    </nav> -->
+      <div class="logo">Sobiya Khan - AI / Software / Web Developer</div>
     </header>
 
-    <main class="hero" class="hero fade-in">
+    <main class="hero fade-in">
       <p class="greeting">Hi, I am</p>
       <h2 class="role">Sobiya.</h2>
       Based in Bangalore, India
       <p class="description">
-        Performance Marketing Analyst | Paid Ads | Conversion Optimization
+        Aspiring AI and software professional with skills in web development,
+        problem solving, technical support, and quality-focused work.
       </p>
-      I optimize paid campaigns, improve conversion rates, and use structured
-      data-driven approaches to drive measurable marketing results.
-      <!-- <div class="buttons"> -->
-      <!-- <a href="Images/resume.pdf" class="btn">resume</a> -->
-      <!-- </div> -->
-
-      <!-- Social Icons -->
+      I build simple digital solutions, support product workflows, and learn
+      quickly across technical and service roles.
       <div class="buttons">
-        <!-- <a href="https://github.com/SobiyaS0002?tab=repositories" target="_blank"><i class="fab fa-github icon"></i></a> -->
         <a href="https://www.linkedin.com/in/sobiya-khan/" target="_blank"
           ><i class="fab fa-linkedin icon"></i
         ></a>
       </div>
     </main>
 
-    <!-- Projects Section -->
-    <!-- <section id="projects" class="projects">
-  <h2 class="section-title">PROJECTS</h2>
-  <div class="project-grid">
-
-
-    <div class="project-card">
-
-      <h3>Doctor Appointment Web App</h3>
-      <p>Designed a responsive UI and built appointment logic using React and PHP. Enabled easy booking and admin-side scheduling.</p>
-      <div class="tech">React &nbsp; PHP &nbsp; Responsive UI</div>
-      <div class="project-icons">
-        <a href="https://github.com/SobiyaS0002/doctor-appointment-react-php" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-      </div>
-    </div>
-    <div class="project-card">
-      <h3>EV Dashboard Project</h3>
-      <p>Real-time dashboard simulating EV station usage and battery health. Built in 6 hours using ChatGPT-assisted logic for an MVP demo.</p>
-      <div class="tech">React &nbsp; AI Tools &nbsp; Startup MVP</div>
-      <div class="project-icons">
-        <a href="https://github.com/SobiyaS0002/EV-Project" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-      </div>
-    </div>
-    <div class="project-card">
-      <h3>Waste Management Dashboard</h3>
-      <p>Built a dashboard to track ingredient waste and optimize kitchen inventory for a real startup. Focused on UI-driven insight delivery.</p>
-      <div class="tech">React &nbsp; Data Dashboard &nbsp; UX</div>
-      <div class="project-icons">
-        <a href="https://github.com/SobiyaS0002/kitchen-iq-insights-hub" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-      </div>
-    </div>
-  </div>
-</section> -->
-
-    <!-- Projects Section -->
-    <section id="projects" class="projects" class="projects fade-in">
+    <section id="projects" class="projects fade-in">
       <h2 class="section-title">CAMPAIGN CASE STUDIES</h2>
       <div class="project-grid">
         <div class="project-grid">
-          <!-- Project 1 -->
           <div class="project-card">
             <h3>Amazon Ads Campaign Optimization</h3>
             <p>
@@ -435,7 +534,6 @@
             </div>
           </div>
 
-          <!-- Project 2 -->
           <div class="project-card">
             <h3>Google Ads Campaign Strategy</h3>
             <p>
@@ -452,7 +550,6 @@
             </div>
           </div>
 
-          <!-- Project 3 -->
           <div class="project-card">
             <h3>Landing Page Optimization</h3>
             <p>
@@ -470,7 +567,6 @@
             </div>
           </div>
 
-          <!-- Project 4 -->
           <div class="project-card">
             <h3>Ad Copy A/B Testing</h3>
             <p>
@@ -492,24 +588,25 @@
       </div>
     </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="skills" class="skills fade-in">
+    <section id="skills" class="skills fade-in">
       <h2 class="section-title">SKILLS</h2>
 
       <div class="skill-tags">
-        <span>Google Ads</span>
-        <span>Amazon Ads</span>
-        <span>Campaign Optimization</span>
-        <span>CTR / CPC Analysis</span>
-        <span>Conversion Rate Optimization</span>
-        <span>A/B Testing</span>
+        <span>Python</span>
+        <span>HTML</span>
+        <span>CSS</span>
+        <span>Javascript Basics</span>
+        <span>SQL</span>
+        <span>Problem Solving</span>
+        <span>AI tools</span>
+        <span>Technical Support</span>
+        <span>Documentation</span>
+        <span>Quality Assurance</span>
+        <span>Response Design</span>
+        <span>Workflow Optimization</span>
       </div>
 
       <div class="skill-tags">
-        <span>HTML</span>
-        <span>CSS</span>
-        <span>SQL</span>
-        <span>Python</span>
         <span>Landing Page Optimization</span>
         <span>Data Analysis</span>
       </div>
@@ -517,24 +614,20 @@
       <div class="skill-tags">
         <span>AI Tools</span>
         <span>Ad Copy Generation</span>
-        <span>Marketing Research</span>
-        <span>Workflow Optimization</span>
       </div>
     </section>
 
-    <!-- Scroll to Top Button -->
     <a href="#" class="scroll-top-btn"><i class="fas fa-arrow-up"></i></a>
 
-    <!-- Contact Section -->
-    <section id="contact" class="projects" class="contact fade-in">
+    <section id="contact" class="contact fade-in">
       <h2 class="section-title">CONTACT</h2>
       <div class="project-grid">
         <div class="project-card">
           <h3>Get in Touch</h3>
 
           <p>
-            Open to Performance Marketing, Paid Ads, and Digital Marketing
-            Analyst roles. Available for immediate opportunities.
+            Open to AI/software internships, web development roles, technical
+            support roles, and quality-focused opportunities.
           </p>
 
           <a href="#" class="contact-btn" onclick="showEmail(event)"
@@ -544,18 +637,17 @@
             id="email-display"
             style="
               display: none;
-              margin-top: 15px;
+              margin-top: 25px;
               font-weight: bold;
-              color: #4b0082;
+              color: #ff41b4;
             "
           >
-            sobopportunity@gmail.com
+            sobiya080022@gmail.com
           </p>
         </div>
       </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
       <p>
         Created By <span class="highlight">Sobiya Khan</span> | © All Rights
