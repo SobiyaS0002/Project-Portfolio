@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Best Chase | Discover Movies Simply</title>
+    <style>
+      /* Base Themes & High-Contrast Colors for Seniors */
+      :root {
+        --bg-primary: #fcfcfc;
+        --bg-secondary: #f4f4f6;
+        --text-main: #1a1a1e;
+        --text-muted: #5a5a62;
+        --brand-grey: #7a7a85;
+        --brand-light-grey: #e2e2e6;
+        --accent-warm: #df7356; /* Subtle warmth for approachability */
+        --border-color: #e2e2e6;
+        --font-stack:
+          system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: var(--font-stack);
+        background-color: var(--bg-primary);
+        color: var(--text-main);
+        line-height: 1.6;
+        font-size: 1.125rem; /* Slightly larger base size for senior readability */
+      }
+
+      /* Navigation */
+      header {
+        border-bottom: 1px solid var(--border-color);
+        position: sticky;
+        top: 0;
+        background: rgba(252, 252, 252, 0.95);
+        backdrop-filter: blur(8px);
+        z-index: 100;
+      }
+
+      .nav-container {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.25rem 2rem;
+      }
+
+      .logo {
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: var(--text-main);
+        letter-spacing: -0.03em;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .logo-dot {
+        width: 12px;
+        height: 12px;
+        background: var(--brand-grey);
+        border-radius: 50%;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+      nav a {
+        text-decoration: none;
+        color: var(--text-muted);
+        font-weight: 500;
+        font-size: 1.1rem;
+        transition: color 0.2s ease;
+      }
+
+      nav a:hover,
+      nav a.active {
+        color: var(--text-main);
+      }
+
+      /* Hero Section */
+      .hero {
+        max-width: 1100px;
+        margin: 4rem auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 4rem;
+        align-items: center;
+      }
+
+      .hero-content h1 {
+        font-size: 3rem;
+        line-height: 1.15;
+        margin-bottom: 1.5rem;
+        letter-spacing: -0.02em;
+      }
+
+      .hero-content p {
+        font-size: 1.3rem;
+        color: var(--text-muted);
+        margin-bottom: 2.5rem;
+      }
+
+      /* Large Accessible Buttons */
+      .btn {
+        display: inline-block;
+        background: var(--text-main);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.15rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        transition:
+          transform 0.2s ease,
+          background-color 0.2s ease;
+      }
+
+      .btn:hover {
+        background: var(--brand-grey);
+        transform: translateY(-2px);
+      }
+
+      /* Corporate Device Showcase Frame */
+      .device-showcase {
+        background: linear-gradient(135deg, #8e9eab, #eef2f3);
+        border-radius: 24px;
+        padding: 2.5rem;
+        aspect-ratio: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+      }
+
+      .device-tag {
+        font-family: monospace;
+        font-weight: 700;
+        color: white;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 0.4rem 0.8rem;
+        border-radius: 6px;
+        align-self: flex-start;
+        font-size: 0.85rem;
+      }
+
+      .device-visual {
+        margin: auto;
+        width: 140px;
+        height: 240px;
+        background: #fff;
+        border-radius: 30px;
+        border: 8px solid #2a2a2e;
+        position: relative;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .device-screen {
+        width: 100%;
+        height: 100%;
+        background: #f0f0f4;
+        border-radius: 20px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        text-align: center;
+      }
+
+      .device-dial {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--brand-grey);
+        border: 4px solid white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Unified Grid Pattern Sections (Inspired by image_24c39c.png) */
+      .section-header {
+        max-width: 1100px;
+        margin: 6rem auto 2rem auto;
+        padding: 0 2rem;
+        border-top: 1px solid var(--border-color);
+        padding-top: 3rem;
+      }
+
+      .section-tag {
+        font-family: monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--accent-warm);
+        font-weight: 700;
+        font-size: 0.95rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .section-header h2 {
+        font-size: 2.25rem;
+        letter-spacing: -0.02em;
+      }
+
+      /* Team Illustrations Grid */
+      .team-grid {
+        max-width: 1100px;
+        margin: 0 auto 6rem auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .team-card {
+        background: var(--bg-secondary);
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+        transition: transform 0.2s ease;
+      }
+
+      .team-card:hover {
+        transform: translateY(-4px);
+      }
+
+      .illustration-box {
+        background: #eef0f2;
+        padding: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom: 1px solid var(--border-color);
+        height: 240px;
+      }
+
+      .illustration-box svg {
+        width: 100%;
+        height: 100%;
+        max-height: 180px;
+      }
+
+      .team-info {
+        padding: 1.5rem;
+      }
+
+      .team-info h3 {
+        font-size: 1.35rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .team-info p {
+        color: var(--text-muted);
+        font-size: 1.05rem;
+      }
+
+      .team-badge {
+        display: inline-block;
+        margin-top: 1rem;
+        font-family: monospace;
+        background: white;
+        border: 1px solid var(--border-color);
+        padding: 0.25rem 0.75rem;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        color: var(--brand-grey);
+      }
+
+      /* Interactive Scientific Discovery Widget */
+      .interactive-section {
+        background: var(--bg-secondary);
+        padding: 5rem 2rem;
+        border-top: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .interactive-container {
+        max-width: 900px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .interactive-container h2 {
+        font-size: 2.25rem;
+        margin-bottom: 1rem;
+      }
+
+      .interactive-container p {
+        color: var(--text-muted);
+        margin-bottom: 3rem;
+        font-size: 1.2rem;
+      }
+
+      .dial-container {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        background: white;
+        padding: 3rem;
+        border-radius: 24px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+        border: 1px solid var(--border-color);
+      }
+
+      .wheel-interface {
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        border: 12px solid var(--brand-light-grey);
+        position: relative;
+        cursor: pointer;
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .wheel-marker {
+        position: absolute;
+        top: 4px;
+        width: 16px;
+        height: 16px;
+        background: var(--accent-warm);
+        border-radius: 50%;
+      }
+
+      .wheel-center {
+        font-size: 2.5rem;
+      }
+
+      .movie-result {
+        margin-top: 1.5rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        min-height: 2.2rem;
+        color: var(--text-main);
+      }
+
+      .tip-text {
+        font-size: 0.95rem;
+        color: var(--brand-grey);
+      }
+
+      /* Footer */
+      footer {
+        max-width: 1100px;
+        margin: 4rem auto;
+        padding: 0 2rem;
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 1rem;
+      }
+
+      /* Responsive Adapting */
+      @media (max-width: 768px) {
+        .hero {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+          text-align: center;
+          margin: 2rem auto;
+        }
+        .device-showcase {
+          aspect-ratio: auto;
+          height: 320px;
+          padding: 1.5rem;
+        }
+        .device-visual {
+          width: 100px;
+          height: 180px;
+        }
+        .hero-content h1 {
+          font-size: 2.25rem;
+        }
+        .nav-container {
+          flex-direction: column;
+          gap: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top Navigation Block -->
+    <header>
+      <div class="nav-container">
+        <div class="logo">
+          <div class="logo-dot"></div>
+          Best Chase
+        </div>
+        <nav>
+          <ul>
+            <li><a href="#product" class="active">Our Device</a></li>
+            <li><a href="#team">The Team</a></li>
+            <li><a href="#science">The Science</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Entry Section -->
+    <section class="hero" id="product">
+      <div class="hero-content">
+        <h1>Beautiful design meets years of scientific discovery.</h1>
+        <p>
+          We believe finding a great classic or modern movie shouldn't require
+          complex menus or endless searching. Best Chase brings an innocent,
+          approachable way to discover films on the go.
+        </p>
+        <a href="#science" class="btn">Try the Dial Experience</a>
+      </div>
+
+      <!-- Structured Container Visual inspired by layout principles in image_24c39c.png -->
+      <div class="device-showcase">
+        <div class="device-tag">// DISPLAY FRAME: MOBILE DISCOVERY</div>
+        <div class="device-visual">
+          <div class="device-screen">
+            <div class="device-dial" id="heroDial"></div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </section>
+
+    <!-- Team Heading (Applying structural rules seen in image_24c39c.png) -->
+    <div class="section-header" id="team">
+      <div class="section-tag">Graphic Systems Case</div>
+      <h2>Meet the Architects of Best Chase</h2>
+    </div>
+
+    <!-- Team Illustrations Gallery (5 Custom Modern Grey Art Style Illustrations) -->
+    <div class="team-grid">
+      <!-- Illustration 1: Founder -->
+      <div class="team-card">
+        <div class="illustration-box">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="100" r="80" fill="#e2e2e6" />
+            <circle cx="100" cy="85" r="30" fill="#7a7a85" />
+            <path d="M50,150 Q100,110 150,150 Z" fill="#4a4a52" />
+            <circle
+              cx="100"
+              cy="85"
+              r="40"
+              stroke="#fcfcfc"
+              stroke-width="4"
+              fill="none"
+            />
+          </svg>
+        </div>
+        <div class="team-info">
+          <h3>Arthur Pendelton</h3>
+          <p>Founder & Big Ideas</p>
+          <div class="team-badge">Illustrator</div>
+        </div>
+      </div>
+
+      <!-- Illustration 2: Designer -->
+      <div class="team-card">
+        <div class="illustration-box">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <rect
+              x="30"
+              y="30"
+              width="140"
+              height="140"
+              rx="20"
+              fill="#e2e2e6"
+            />
+            <circle cx="100" cy="90" r="28" fill="#9a9aa5" />
+            <path d="M60,155 C60,130 140,130 140,155 Z" fill="#7a7a85" />
+            <polygon points="100,20 120,40 80,40" fill="#df7356" />
+          </svg>
+        </div>
+        <div class="team-info">
+          <h3>Evelyn Rose</h3>
+          <p>Beautiful Design Lead</p>
+          <div class="team-badge">Brand Design</div>
+        </div>
+      </div>
+
+      <!-- Illustration 3: Scientist -->
+      <div class="team-card">
+        <div class="illustration-box">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="100" r="80" fill="#7a7a85" />
+            <circle cx="100" cy="80" r="25" fill="#fcfcfc" />
+            <path d="M55,145 Q100,115 145,145 Z" fill="#e2e2e6" />
+            <line
+              x1="80"
+              y1="80"
+              x2="120"
+              y2="80"
+              stroke="#7a7a85"
+              stroke-width="4"
+            />
+          </svg>
+        </div>
+        <div class="team-info">
+          <h3>Dr. Marcus Vance</h3>
+          <p>Scientific Discovery</p>
+          <div class="team-badge">Research</div>
+        </div>
+      </div>
+
+      <!-- Illustration 4: Engineer -->
+      <div class="team-card">
+        <div class="illustration-box">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="100,20 170,150 30,150" fill="#e2e2e6" />
+            <circle cx="100" cy="95" r="25" fill="#4a4a52" />
+            <path d="M70,150 Q100,125 130,150 Z" fill="#7a7a85" />
+          </svg>
+        </div>
+        <div class="team-info">
+          <h3>Clara Sterling</h3>
+          <p>Hardware Systems</p>
+          <div class="team-badge">Architecture</div>
+        </div>
+      </div>
+
+      <!-- Illustration 5: Experience Lead -->
+      <div class="team-card">
+        <div class="illustration-box">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <rect
+              x="40"
+              y="40"
+              width="120"
+              height="120"
+              rx="60"
+              fill="#9a9aa5"
+            />
+            <circle cx="100" cy="85" r="25" fill="#e2e2e6" />
+            <path d="M60,140 Q100,115 140,140 Z" fill="#4a4a52" />
+            <circle cx="140" cy="60" r="15" fill="#df7356" />
+          </svg>
+        </div>
+        <div class="team-info">
+          <h3>Thomas Wright</h3>
+          <p>Senior Approachability</p>
+          <div class="team-badge">Accessibility</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Section (Implements the approachable dial feature) -->
+    <section class="interactive-section" id="science">
+      <div class="interactive-container">
+        <h2>Experience the Science of Discovery</h2>
+        <p>
+          Spin our tactile interface wheel below to simulate how the on-the-go
+          device matches modern cinema options with nostalgic structural
+          simplicity.
+        </p>
+
+        <div class="dial-container">
+          <div class="wheel-interface" id="discoveryWheel">
+            <div class="wheel-marker"></div>
+            <div class="wheel-center">🎬</div>
+          </div>
+          <div class="movie-result" id="movieResult">
+            Click or Spin the Wheel
+          </div>
+          <p class="tip-text">
+            Designed purely for clear, simple, delightful navigation.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Minimal Clean Footer Section -->
+    <footer>
+      <p>
+        &copy; 2026 Best Chase Systems. Formatted carefully to follow modern
+        digital architectural rules.
+      </p>
+    </footer>
+
+    <!-- Interactive Script logic for sensory feedback -->
+    <script>
+      const movies = [
+        "Singin' in the Rain (1952)",
+        "Casablanca (1942)",
+        "The Sound of Music (1965)",
+        "Roman Holiday (1953)",
+        "It's a Wonderful Life (1946)",
+        "The Wizard of Oz (1939)",
+      ];
+
+      const wheel = document.getElementById("discoveryWheel");
+      const result = document.getElementById("movieResult");
+      const heroDial = document.getElementById("heroDial");
+      let currentRotation = 0;
+
+      function spinWheel() {
+        currentRotation += Math.floor(Math.random() * 360) + 360;
+        wheel.style.transform = `rotate(${currentRotation}deg)`;
+        heroDial.style.transform = `rotate(${-currentRotation * 0.5}deg)`;
+
+        result.textContent = "Searching through history...";
+
+        setTimeout(() => {
+          const randomIndex = Math.floor(Math.random() * movies.length);
+          result.textContent = movies[randomIndex];
+        }, 400);
+      }
+
+      wheel.addEventListener("click", spinWheel);
+      heroDial.addEventListener("mouseenter", () => {
+        heroDial.style.transition = "transform 0.8s ease";
+        heroDial.style.transform = "rotate(180deg)";
+      });
+    </script>
+  </body>
+</html>
