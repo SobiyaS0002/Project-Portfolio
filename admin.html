@@ -1,0 +1,2388 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <script>
+      (function () {
+        const saved = localStorage.getItem("dashboard-theme");
+        const preferred = window.matchMedia("(prefers-color-scheme: dark)")
+          .matches
+          ? "dark"
+          : "light";
+        document.documentElement.setAttribute("data-theme", saved || preferred);
+      })();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+      :root,
+      html[data-theme="light"] {
+        --bg: #edf6ee;
+        --bg-2: #efe7fb;
+        --surface: rgba(247, 251, 245, 0.78);
+        --surface-solid: #f5faf2;
+        --surface-2: #f2ecfb;
+        --text: #153029;
+        --muted: #5c726c;
+        --border: rgba(29, 91, 69, 0.12);
+        --accent: #24a56f;
+        --accent-rgb: 36, 165, 111;
+        --accent-2: #7857f2;
+        --accent-2-rgb: 120, 87, 242;
+        --success: #2eb67d;
+        --warning: #f0b35e;
+        --danger: #ea6d8f;
+        --shadow: 0 24px 60px rgba(59, 88, 72, 0.12);
+        --shadow-soft: 0 16px 40px rgba(80, 68, 120, 0.1);
+        --sidebar-text: #e8fff3;
+        --sidebar-muted: rgba(232, 255, 243, 0.72);
+      }
+
+      html[data-theme="dark"] {
+        --bg: #0d1715;
+        --bg-2: #181227;
+        --surface: rgba(20, 33, 30, 0.82);
+        --surface-solid: #152320;
+        --surface-2: #201935;
+        --text: #def4e5;
+        --muted: #97b1a9;
+        --border: rgba(168, 212, 191, 0.12);
+        --accent: #3ad88a;
+        --accent-rgb: 58, 216, 138;
+        --accent-2: #a186ff;
+        --accent-2-rgb: 161, 134, 255;
+        --success: #3fd08f;
+        --warning: #f2bb67;
+        --danger: #ff7ea3;
+        --shadow: 0 24px 60px rgba(3, 8, 7, 0.45);
+        --shadow-soft: 0 16px 40px rgba(2, 6, 10, 0.38);
+        --sidebar-text: #e6fff1;
+        --sidebar-muted: rgba(230, 255, 241, 0.72);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Inter", system-ui, sans-serif;
+        color: var(--text);
+        min-height: 100vh;
+        background:
+          radial-gradient(
+            circle at 0% 0%,
+            rgba(var(--accent-rgb), 0.18),
+            transparent 28%
+          ),
+          radial-gradient(
+            circle at 100% 0%,
+            rgba(var(--accent-2-rgb), 0.18),
+            transparent 28%
+          ),
+          radial-gradient(
+            circle at 50% 100%,
+            rgba(var(--accent-rgb), 0.1),
+            transparent 28%
+          ),
+          linear-gradient(135deg, var(--bg), var(--bg-2));
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background:
+          linear-gradient(
+            135deg,
+            rgba(var(--accent-rgb), 0.03),
+            transparent 40%
+          ),
+          linear-gradient(
+            315deg,
+            rgba(var(--accent-2-rgb), 0.04),
+            transparent 40%
+          );
+        z-index: -1;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+
+      .app {
+        display: grid;
+        grid-template-columns: 290px 1fr;
+        min-height: 100vh;
+        position: relative;
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        padding: 24px 18px;
+        color: var(--sidebar-text);
+        background:
+          linear-gradient(
+            180deg,
+            rgba(var(--accent-rgb), 0.28),
+            rgba(var(--accent-2-rgb), 0.24)
+          ),
+          linear-gradient(180deg, #16342c, #241d40);
+        border-right: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+        z-index: 40;
+        box-shadow: var(--shadow);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 8px 10px;
+      }
+
+      .brand-mark {
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.24),
+          rgba(255, 255, 255, 0.08)
+        );
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      }
+
+      .brand-mark svg {
+        width: 24px;
+        height: 24px;
+        color: #dffff0;
+      }
+
+      .brand h2 {
+        margin: 0;
+        font-size: 1.08rem;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+      }
+
+      .brand p {
+        margin: 4px 0 0;
+        color: var(--sidebar-muted);
+        font-size: 0.83rem;
+      }
+
+      .nav-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 6px;
+      }
+
+      .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 14px;
+        border-radius: 16px;
+        color: var(--sidebar-muted);
+        transition: 0.25s ease;
+        font-weight: 600;
+      }
+
+      .nav-link:hover,
+      .nav-link.active {
+        color: var(--sidebar-text);
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(4px);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      }
+
+      .nav-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        background: rgba(255, 255, 255, 0.08);
+        flex-shrink: 0;
+      }
+
+      .sidebar-card {
+        margin-top: auto;
+        border-radius: 22px;
+        padding: 18px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      }
+
+      .sidebar-card h4 {
+        margin: 0 0 8px;
+        font-size: 0.98rem;
+      }
+
+      .sidebar-card p {
+        margin: 0 0 14px;
+        color: var(--sidebar-muted);
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      .mini-progress {
+        height: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 999px;
+        overflow: hidden;
+      }
+
+      .mini-progress span {
+        display: block;
+        width: 84%;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, #57f2a4, #b58cff);
+      }
+
+      .main {
+        padding: 18px 18px 32px;
+        min-width: 0;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 12px;
+        z-index: 30;
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 18px 20px;
+        border: 1px solid var(--border);
+        border-radius: 26px;
+        background: rgba(255, 255, 255, 0.06);
+        backdrop-filter: blur(16px);
+        box-shadow: var(--shadow-soft);
+      }
+
+      .topbar-left {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        min-width: 0;
+      }
+
+      .page-copy h1 {
+        margin: 0;
+        font-size: clamp(1.25rem, 2vw, 1.85rem);
+        line-height: 1.1;
+      }
+
+      .page-copy p {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 0.94rem;
+      }
+
+      .topbar-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      .search-wrap {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: min(100%, 320px);
+        padding: 12px 14px;
+        border-radius: 16px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      }
+
+      .search-wrap input {
+        width: 100%;
+        background: transparent;
+        border: 0;
+        outline: none;
+        color: var(--text);
+      }
+
+      .search-wrap input::placeholder {
+        color: var(--muted);
+      }
+
+      .icon-btn,
+      .theme-btn,
+      .primary-btn,
+      .ghost-btn,
+      .mini-btn {
+        border: 0;
+        cursor: pointer;
+        transition: 0.25s ease;
+      }
+
+      .icon-btn,
+      .theme-btn {
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        display: grid;
+        place-items: center;
+        color: var(--text);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow-soft);
+        position: relative;
+        flex-shrink: 0;
+      }
+
+      .theme-btn {
+        width: auto;
+        padding: 0 16px;
+        display: inline-flex;
+        gap: 10px;
+        font-weight: 700;
+      }
+
+      .icon-btn:hover,
+      .theme-btn:hover,
+      .primary-btn:hover,
+      .ghost-btn:hover,
+      .mini-btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .notify-badge {
+        position: absolute;
+        top: 9px;
+        right: 9px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--danger);
+        box-shadow: 0 0 0 4px rgba(var(--accent-2-rgb), 0.12);
+      }
+
+      .profile-chip {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 10px 8px 8px;
+        border-radius: 18px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow-soft);
+      }
+
+      .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(
+          135deg,
+          rgba(var(--accent-rgb), 0.2),
+          rgba(var(--accent-2-rgb), 0.18)
+        );
+        color: var(--text);
+        font-weight: 800;
+        flex-shrink: 0;
+      }
+
+      .profile-chip strong {
+        display: block;
+        font-size: 0.94rem;
+      }
+
+      .profile-chip span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.82rem;
+        margin-top: 2px;
+      }
+
+      .content {
+        display: grid;
+        gap: 18px;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .card,
+      .panel {
+        border-radius: 26px;
+        border: 1px solid var(--border);
+        background: linear-gradient(
+          180deg,
+          var(--surface),
+          rgba(255, 255, 255, 0.03)
+        );
+        backdrop-filter: blur(16px);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .stat-card {
+        padding: 20px;
+        position: relative;
+        isolation: isolate;
+      }
+
+      .stat-card::before {
+        content: "";
+        position: absolute;
+        inset: auto -25% -40% auto;
+        width: 140px;
+        height: 140px;
+        background: radial-gradient(
+          circle,
+          rgba(var(--accent-2-rgb), 0.22),
+          transparent 62%
+        );
+        z-index: -1;
+      }
+
+      .stat-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 18px;
+      }
+
+      .stat-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 18px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(
+          135deg,
+          rgba(var(--accent-rgb), 0.22),
+          rgba(var(--accent-2-rgb), 0.18)
+        );
+        color: var(--text);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      }
+
+      .delta {
+        padding: 7px 10px;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        background: rgba(var(--accent-rgb), 0.12);
+        color: var(--accent);
+      }
+
+      .delta.warning {
+        background: rgba(240, 179, 94, 0.16);
+        color: var(--warning);
+      }
+
+      .delta.purple {
+        background: rgba(var(--accent-2-rgb), 0.14);
+        color: var(--accent-2);
+      }
+
+      .stat-card h3 {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+        font-weight: 600;
+      }
+
+      .stat-value {
+        margin: 10px 0 6px;
+        font-size: clamp(1.65rem, 3vw, 2.2rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+      }
+
+      .stat-note {
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      .flash {
+        animation: pulseFlash 0.7s ease;
+      }
+
+      @keyframes pulseFlash {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.03);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .charts-grid {
+        display: grid;
+        grid-template-columns: 1.65fr 1fr;
+        gap: 18px;
+      }
+
+      .panel {
+        padding: 18px;
+      }
+
+      .panel.large {
+        min-height: 390px;
+      }
+
+      .panel-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 14px;
+        margin-bottom: 18px;
+      }
+
+      .panel-head h3 {
+        margin: 0;
+        font-size: 1.05rem;
+      }
+
+      .panel-head p {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(var(--accent-rgb), 0.1);
+        color: var(--accent);
+        font-weight: 800;
+        font-size: 0.8rem;
+        white-space: nowrap;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: currentColor;
+        box-shadow: 0 0 0 6px rgba(var(--accent-rgb), 0.12);
+        animation: pulseDot 1.8s infinite;
+      }
+
+      @keyframes pulseDot {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.2);
+          opacity: 0.75;
+        }
+      }
+
+      .chart-box {
+        position: relative;
+        height: 300px;
+      }
+
+      .grid-split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+
+      .analytics-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        justify-content: space-between;
+      }
+
+      .metric-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .metric-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 16px;
+        border-radius: 18px;
+        background: rgba(var(--accent-rgb), 0.06);
+        border: 1px solid rgba(var(--accent-rgb), 0.1);
+      }
+
+      .metric-item h4 {
+        margin: 0 0 4px;
+        font-size: 0.95rem;
+      }
+
+      .metric-item p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+
+      .metric-item strong {
+        font-size: 1.15rem;
+        letter-spacing: -0.02em;
+      }
+
+      .progress-card {
+        padding: 16px;
+        border-radius: 18px;
+        background: rgba(var(--accent-2-rgb), 0.08);
+        border: 1px solid rgba(var(--accent-2-rgb), 0.1);
+      }
+
+      .progress-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+      }
+
+      .progress-row strong {
+        font-size: 0.95rem;
+      }
+
+      .progress {
+        height: 10px;
+        border-radius: 999px;
+        overflow: hidden;
+        background: rgba(var(--accent-2-rgb), 0.1);
+      }
+
+      .progress span {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        transition: width 0.5s ease;
+      }
+
+      .bottom-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 0.9fr;
+        gap: 18px;
+        align-items: start;
+      }
+
+      .toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+      }
+
+      .toolbar-left,
+      .toolbar-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .toolbar h3 {
+        margin: 0;
+        font-size: 1.06rem;
+      }
+
+      .toolbar small {
+        color: var(--muted);
+        font-weight: 600;
+        display: block;
+        margin-top: 4px;
+      }
+
+      .field,
+      .select {
+        height: 46px;
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        color: var(--text);
+        padding: 0 14px;
+        outline: none;
+        min-width: 170px;
+      }
+
+      .field::placeholder {
+        color: var(--muted);
+      }
+
+      .primary-btn,
+      .ghost-btn {
+        height: 46px;
+        border-radius: 14px;
+        padding: 0 16px;
+        font-weight: 800;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .primary-btn {
+        color: #effff5;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        box-shadow: 0 12px 24px rgba(var(--accent-rgb), 0.18);
+      }
+
+      .ghost-btn {
+        color: var(--text);
+        background: var(--surface);
+        border: 1px solid var(--border);
+      }
+
+      .table-wrap {
+        width: 100%;
+        overflow-x: auto;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        background: rgba(var(--accent-rgb), 0.03);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 780px;
+      }
+
+      thead th {
+        text-align: left;
+        padding: 16px 18px;
+        color: var(--muted);
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        border-bottom: 1px solid var(--border);
+      }
+
+      tbody td {
+        padding: 16px 18px;
+        border-bottom: 1px solid var(--border);
+        vertical-align: middle;
+      }
+
+      tbody tr {
+        transition: 0.22s ease;
+      }
+
+      tbody tr:hover {
+        background: rgba(var(--accent-2-rgb), 0.06);
+      }
+
+      .user-cell {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 220px;
+      }
+
+      .user-meta strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 0.95rem;
+      }
+
+      .user-meta span {
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 7px 10px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-weight: 800;
+        line-height: 1;
+        white-space: nowrap;
+      }
+
+      .status-active {
+        background: rgba(46, 182, 125, 0.14);
+        color: var(--success);
+      }
+      .status-away {
+        background: rgba(240, 179, 94, 0.16);
+        color: var(--warning);
+      }
+      .status-review {
+        background: rgba(var(--accent-2-rgb), 0.14);
+        color: var(--accent-2);
+      }
+      .status-suspended {
+        background: rgba(234, 109, 143, 0.14);
+        color: var(--danger);
+      }
+
+      .role-badge {
+        background: rgba(var(--accent-rgb), 0.12);
+        color: var(--accent);
+      }
+
+      .actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .mini-btn {
+        min-height: 36px;
+        border-radius: 12px;
+        padding: 0 12px;
+        font-weight: 700;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        color: var(--text);
+      }
+
+      .mini-btn.danger {
+        color: var(--danger);
+        background: rgba(234, 109, 143, 0.08);
+        border-color: rgba(234, 109, 143, 0.18);
+      }
+
+      .empty-state {
+        padding: 32px 20px;
+        text-align: center;
+        color: var(--muted);
+      }
+
+      .timeline {
+        display: grid;
+        gap: 12px;
+      }
+
+      .timeline-item {
+        display: grid;
+        grid-template-columns: 40px 1fr;
+        gap: 12px;
+        padding: 14px;
+        border-radius: 18px;
+        background: rgba(var(--accent-2-rgb), 0.07);
+        border: 1px solid rgba(var(--accent-2-rgb), 0.1);
+      }
+
+      .timeline-dot {
+        width: 40px;
+        height: 40px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        color: var(--text);
+        background: linear-gradient(
+          135deg,
+          rgba(var(--accent-rgb), 0.2),
+          rgba(var(--accent-2-rgb), 0.22)
+        );
+        font-weight: 900;
+      }
+
+      .timeline-item strong {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 0.94rem;
+      }
+
+      .timeline-item p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.86rem;
+        line-height: 1.5;
+      }
+
+      .timeline-item time {
+        display: inline-block;
+        margin-top: 7px;
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-weight: 700;
+      }
+
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(10, 16, 14, 0.45);
+        backdrop-filter: blur(6px);
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.25s ease;
+        z-index: 35;
+      }
+
+      .overlay.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .mobile-toggle {
+        display: none;
+      }
+
+      .modal {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        background: rgba(12, 18, 16, 0.38);
+        backdrop-filter: blur(8px);
+      }
+
+      .modal.show {
+        display: flex;
+      }
+
+      .modal-card {
+        width: min(100%, 640px);
+        border-radius: 26px;
+        border: 1px solid var(--border);
+        background: linear-gradient(
+          180deg,
+          var(--surface-solid),
+          var(--surface-2)
+        );
+        box-shadow: var(--shadow);
+        padding: 22px;
+      }
+
+      .modal-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .modal-head h3 {
+        margin: 0;
+        font-size: 1.15rem;
+      }
+
+      .modal-head p {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .close-btn {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        color: var(--text);
+        cursor: pointer;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+
+      .form-group {
+        display: grid;
+        gap: 8px;
+      }
+
+      .form-group.full {
+        grid-column: 1 / -1;
+      }
+
+      .form-group label {
+        font-size: 0.88rem;
+        font-weight: 700;
+      }
+
+      .form-group input,
+      .form-group select {
+        height: 48px;
+        padding: 0 14px;
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        outline: none;
+        background: var(--surface);
+        color: var(--text);
+      }
+
+      .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 18px;
+        flex-wrap: wrap;
+      }
+
+      .subtle {
+        color: var(--muted);
+      }
+
+      .footer-note {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin-top: 16px;
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+
+      ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(
+          180deg,
+          rgba(var(--accent-rgb), 0.35),
+          rgba(var(--accent-2-rgb), 0.35)
+        );
+        border-radius: 999px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      @media (max-width: 1280px) {
+        .stats-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .bottom-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 1080px) {
+        .app {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          position: fixed;
+          left: 0;
+          top: 0;
+          width: min(84vw, 320px);
+          transform: translateX(-110%);
+          transition: 0.28s ease;
+        }
+
+        .sidebar.open {
+          transform: translateX(0);
+        }
+
+        .mobile-toggle {
+          display: grid;
+        }
+
+        .charts-grid,
+        .grid-split {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .main {
+          padding: 12px 12px 24px;
+        }
+
+        .topbar {
+          border-radius: 22px;
+          padding: 14px;
+        }
+
+        .page-copy p {
+          display: none;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .panel,
+        .stat-card {
+          border-radius: 22px;
+        }
+
+        .search-wrap {
+          min-width: 100%;
+        }
+
+        .toolbar {
+          align-items: stretch;
+        }
+
+        .toolbar-left,
+        .toolbar-right {
+          width: 100%;
+        }
+
+        .field,
+        .select,
+        .primary-btn,
+        .ghost-btn {
+          width: 100%;
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .profile-chip .profile-text {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="app">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <div class="brand-mark">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.1"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M5 12l5-5 4 4 5-6"></path>
+              <path d="M19 6h-4"></path>
+              <path d="M19 6v4"></path>
+              <path d="M4 19h16"></path>
+            </svg>
+          </div>
+          <div>
+            <h2>VerdePulse</h2>
+            <p>Admin intelligence suite</p>
+          </div>
+        </div>
+
+        <nav class="nav-group" id="navLinks">
+          <a
+            href="index.html"
+            style="
+              display: inline-block;
+              padding: 10px 15px;
+              background-color: rgb(85, 167, 142);
+              color: white;
+              text-decoration: none;
+              border-radius: 5px;
+              margin: 5px;
+            "
+            >← Go Back to Home</a
+          >
+          <a href="#overview" class="nav-link active"
+            ><span class="nav-icon">◫</span><span>Overview</span></a
+          >
+          <a href="#analytics" class="nav-link"
+            ><span class="nav-icon">◌</span><span>Analytics</span></a
+          >
+          <a href="#users" class="nav-link"
+            ><span class="nav-icon">◎</span><span>Users</span></a
+          >
+          <a href="#activity" class="nav-link"
+            ><span class="nav-icon">✦</span><span>Activity</span></a
+          >
+        </nav>
+
+        <div class="sidebar-card">
+          <h4>System health</h4>
+          <p>
+            Infrastructure uptime remains stable with real-time processing at
+            peak efficiency.
+          </p>
+          <div class="mini-progress"><span id="sidebarHealthBar"></span></div>
+          <div class="footer-note">
+            <span>Live status</span>
+            <strong id="sidebarHealthText">99.93%</strong>
+          </div>
+        </div>
+      </aside>
+
+      <div class="main">
+        <header class="topbar">
+          <div class="topbar-left">
+            <button
+              class="icon-btn mobile-toggle"
+              id="menuBtn"
+              aria-label="Open menu"
+            >
+              ☰
+            </button>
+            <div class="page-copy">
+              <h1>Admin Dashboard</h1>
+              <p>
+                Track growth, manage users, and monitor live performance from
+                one place.
+              </p>
+            </div>
+          </div>
+
+          <div class="topbar-right">
+            <div class="search-wrap">
+              <span>⌕</span>
+              <input
+                type="text"
+                id="globalSearch"
+                placeholder="Search users, activity, reports..."
+              />
+            </div>
+
+            <button
+              class="theme-btn"
+              id="themeToggle"
+              aria-label="Toggle theme"
+            >
+              <span id="themeIcon">☾</span>
+              <span id="themeLabel">Dark</span>
+            </button>
+
+            <button class="icon-btn" aria-label="Notifications">
+              ⌁
+              <span class="notify-badge"></span>
+            </button>
+
+            <div class="profile-chip">
+              <div class="avatar">JP</div>
+              <div class="profile-text">
+                <strong>Jordan Park</strong>
+                <span>Super Admin</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main class="content">
+          <section id="overview" class="stats-grid">
+            <div class="card stat-card">
+              <div class="stat-top">
+                <div class="stat-icon">↗</div>
+                <div class="delta">+12.8%</div>
+              </div>
+              <h3>Monthly Revenue</h3>
+              <div class="stat-value" id="revenueValue">$128.4K</div>
+              <div class="stat-note">Compared to last month</div>
+            </div>
+
+            <div class="card stat-card">
+              <div class="stat-top">
+                <div class="stat-icon">◉</div>
+                <div class="delta purple">+64</div>
+              </div>
+              <h3>New Users</h3>
+              <div class="stat-value" id="usersValue">1,248</div>
+              <div class="stat-note">This month onboarding</div>
+            </div>
+
+            <div class="card stat-card">
+              <div class="stat-top">
+                <div class="stat-icon">⟲</div>
+                <div class="delta">+0.7%</div>
+              </div>
+              <h3>Conversion Rate</h3>
+              <div class="stat-value" id="conversionValue">6.42%</div>
+              <div class="stat-note">Across all funnels</div>
+            </div>
+
+            <div class="card stat-card">
+              <div class="stat-top">
+                <div class="stat-icon">✶</div>
+                <div class="delta warning">Stable</div>
+              </div>
+              <h3>System Health</h3>
+              <div class="stat-value" id="healthValue">99.93%</div>
+              <div class="stat-note">API, queue, and database</div>
+            </div>
+          </section>
+
+          <section id="analytics" class="charts-grid">
+            <div class="panel large">
+              <div class="panel-head">
+                <div>
+                  <h3>Revenue Flow</h3>
+                  <p>Live earnings trend from recent activity windows.</p>
+                </div>
+                <span class="pill"><span class="dot"></span>Real-time</span>
+              </div>
+              <div class="chart-box">
+                <canvas id="revenueChart"></canvas>
+              </div>
+            </div>
+
+            <div class="grid-split">
+              <div class="panel">
+                <div class="panel-head">
+                  <div>
+                    <h3>User Role Mix</h3>
+                    <p>Current team distribution.</p>
+                  </div>
+                </div>
+                <div class="chart-box" style="height: 260px">
+                  <canvas id="rolesChart"></canvas>
+                </div>
+              </div>
+
+              <div class="panel">
+                <div class="panel-head">
+                  <div>
+                    <h3>Team Output</h3>
+                    <p>Weekly productivity overview.</p>
+                  </div>
+                </div>
+                <div class="chart-box" style="height: 260px">
+                  <canvas id="productivityChart"></canvas>
+                </div>
+              </div>
+
+              <div class="panel analytics-panel">
+                <div class="panel-head" style="margin-bottom: 8px">
+                  <div>
+                    <h3>Live Analytics</h3>
+                    <p>Auto-refreshing business indicators.</p>
+                  </div>
+                  <small class="subtle" id="liveTimestamp">Updated now</small>
+                </div>
+
+                <div class="metric-list">
+                  <div class="metric-item">
+                    <div>
+                      <h4>Visitors Online</h4>
+                      <p>Active web + app sessions</p>
+                    </div>
+                    <strong id="onlineUsers">438</strong>
+                  </div>
+
+                  <div class="metric-item">
+                    <div>
+                      <h4>Orders Processing</h4>
+                      <p>Transactions in queue</p>
+                    </div>
+                    <strong id="ordersProcessing">76</strong>
+                  </div>
+
+                  <div class="metric-item">
+                    <div>
+                      <h4>Avg Session</h4>
+                      <p>Engagement duration</p>
+                    </div>
+                    <strong id="avgSession">4m 18s</strong>
+                  </div>
+
+                  <div class="metric-item">
+                    <div>
+                      <h4>Open Tickets</h4>
+                      <p>Support issues awaiting action</p>
+                    </div>
+                    <strong id="openTickets">14</strong>
+                  </div>
+                </div>
+
+                <div class="progress-card">
+                  <div class="progress-row">
+                    <span>Campaign goal</span>
+                    <strong id="goalText">72%</strong>
+                  </div>
+                  <div class="progress">
+                    <span id="goalBar" style="width: 72%"></span>
+                  </div>
+                </div>
+
+                <div class="progress-card">
+                  <div class="progress-row">
+                    <span>Retention confidence</span>
+                    <strong id="retentionText">84%</strong>
+                  </div>
+                  <div class="progress">
+                    <span id="retentionBar" style="width: 84%"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="bottom-grid">
+            <div class="panel" id="users">
+              <div class="toolbar">
+                <div class="toolbar-left">
+                  <div>
+                    <h3>User Management</h3>
+                    <small
+                      ><span id="userCountLabel">0</span> members shown</small
+                    >
+                  </div>
+                </div>
+                <div class="toolbar-right">
+                  <input
+                    type="text"
+                    class="field"
+                    id="userSearch"
+                    placeholder="Search name or email"
+                  />
+                  <select class="select" id="roleFilter">
+                    <option value="All">All Roles</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Analyst">Analyst</option>
+                    <option value="Support">Support</option>
+                  </select>
+                  <button class="primary-btn" id="addUserBtn">
+                    ＋ Add User
+                  </button>
+                </div>
+              </div>
+
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>User</th>
+                      <th>Role</th>
+                      <th>Status</th>
+                      <th>Joined</th>
+                      <th>Location</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="userTableBody"></tbody>
+                </table>
+                <div class="empty-state" id="emptyState" style="display: none">
+                  No users match your filters.
+                </div>
+              </div>
+            </div>
+
+            <div class="panel" id="activity">
+              <div class="panel-head">
+                <div>
+                  <h3>Recent Activity</h3>
+                  <p>Live events from users and platform services.</p>
+                </div>
+              </div>
+              <div class="timeline" id="activityList"></div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div class="modal" id="userModal">
+      <div class="modal-card">
+        <div class="modal-head">
+          <div>
+            <h3>Add New User</h3>
+            <p>Create a user profile and assign role access instantly.</p>
+          </div>
+          <button class="close-btn" id="closeModal" aria-label="Close">
+            ✕
+          </button>
+        </div>
+
+        <form id="userForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="nameInput">Full Name</label>
+              <input
+                id="nameInput"
+                type="text"
+                required
+                placeholder="Avery Morgan"
+              />
+            </div>
+            <div class="form-group">
+              <label for="emailInput">Email Address</label>
+              <input
+                id="emailInput"
+                type="email"
+                required
+                placeholder="avery@company.com"
+              />
+            </div>
+            <div class="form-group">
+              <label for="roleInput">Role</label>
+              <select id="roleInput" required>
+                <option value="Admin">Admin</option>
+                <option value="Manager">Manager</option>
+                <option value="Analyst">Analyst</option>
+                <option value="Support">Support</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="statusInput">Status</label>
+              <select id="statusInput" required>
+                <option value="Active">Active</option>
+                <option value="Away">Away</option>
+                <option value="Review">Review</option>
+                <option value="Suspended">Suspended</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label for="locationInput">Location</label>
+              <input
+                id="locationInput"
+                type="text"
+                required
+                placeholder="Singapore"
+              />
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="ghost-btn" id="cancelModal">
+              Cancel
+            </button>
+            <button type="submit" class="primary-btn">Create User</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      const users = [
+        {
+          id: 1,
+          name: "Ava Thompson",
+          email: "ava@verdepulse.io",
+          role: "Admin",
+          status: "Active",
+          joined: "2026-01-12",
+          location: "Berlin",
+        },
+        {
+          id: 2,
+          name: "Liam Carter",
+          email: "liam@verdepulse.io",
+          role: "Manager",
+          status: "Review",
+          joined: "2026-02-04",
+          location: "Toronto",
+        },
+        {
+          id: 3,
+          name: "Noah Patel",
+          email: "noah@verdepulse.io",
+          role: "Analyst",
+          status: "Active",
+          joined: "2026-03-22",
+          location: "Singapore",
+        },
+        {
+          id: 4,
+          name: "Mia Reynolds",
+          email: "mia@verdepulse.io",
+          role: "Support",
+          status: "Away",
+          joined: "2026-02-14",
+          location: "Dublin",
+        },
+        {
+          id: 5,
+          name: "Ethan Brooks",
+          email: "ethan@verdepulse.io",
+          role: "Manager",
+          status: "Active",
+          joined: "2026-01-28",
+          location: "Austin",
+        },
+        {
+          id: 6,
+          name: "Sophia Chen",
+          email: "sophia@verdepulse.io",
+          role: "Analyst",
+          status: "Suspended",
+          joined: "2026-03-01",
+          location: "Taipei",
+        },
+        {
+          id: 7,
+          name: "Lucas Green",
+          email: "lucas@verdepulse.io",
+          role: "Support",
+          status: "Active",
+          joined: "2026-04-09",
+          location: "Sydney",
+        },
+        {
+          id: 8,
+          name: "Emma Rivera",
+          email: "emma@verdepulse.io",
+          role: "Admin",
+          status: "Active",
+          joined: "2026-04-17",
+          location: "Madrid",
+        },
+      ];
+
+      const activities = [
+        {
+          icon: "↗",
+          title: "Revenue spike detected",
+          text: "Campaign-driven conversions increased by 14% in the last hour.",
+          time: "2 min ago",
+        },
+        {
+          icon: "◎",
+          title: "New analyst added",
+          text: "Noah Patel was assigned Analyst access and reporting permissions.",
+          time: "9 min ago",
+        },
+        {
+          icon: "✦",
+          title: "Support queue normalized",
+          text: "Ticket backlog dropped below the alert threshold automatically.",
+          time: "17 min ago",
+        },
+        {
+          icon: "◌",
+          title: "Traffic source changed",
+          text: "Organic traffic overtook paid traffic across the main funnel.",
+          time: "28 min ago",
+        },
+      ];
+
+      const state = {
+        query: "",
+        role: "All",
+        revenue: 128400,
+        newUsers: 1248,
+        conversion: 6.42,
+        health: 99.93,
+        online: 438,
+        orders: 76,
+        sessionSec: 258,
+        tickets: 14,
+        goal: 72,
+        retention: 84,
+      };
+
+      let lineChart, doughnutChart, barChart;
+      let chartLabels = buildTimeLabels(12);
+      let revenueSeries = [68, 72, 71, 76, 79, 77, 83, 86, 84, 89, 94, 97];
+      let productivitySeries = [74, 81, 78, 86, 91, 88, 96];
+
+      const statusCycle = ["Active", "Away", "Review", "Suspended"];
+
+      const els = {
+        html: document.documentElement,
+        sidebar: document.getElementById("sidebar"),
+        overlay: document.getElementById("overlay"),
+        menuBtn: document.getElementById("menuBtn"),
+        themeToggle: document.getElementById("themeToggle"),
+        themeIcon: document.getElementById("themeIcon"),
+        themeLabel: document.getElementById("themeLabel"),
+        globalSearch: document.getElementById("globalSearch"),
+        userSearch: document.getElementById("userSearch"),
+        roleFilter: document.getElementById("roleFilter"),
+        userTableBody: document.getElementById("userTableBody"),
+        userCountLabel: document.getElementById("userCountLabel"),
+        emptyState: document.getElementById("emptyState"),
+        activityList: document.getElementById("activityList"),
+        addUserBtn: document.getElementById("addUserBtn"),
+        userModal: document.getElementById("userModal"),
+        closeModal: document.getElementById("closeModal"),
+        cancelModal: document.getElementById("cancelModal"),
+        userForm: document.getElementById("userForm"),
+        revenueValue: document.getElementById("revenueValue"),
+        usersValue: document.getElementById("usersValue"),
+        conversionValue: document.getElementById("conversionValue"),
+        healthValue: document.getElementById("healthValue"),
+        onlineUsers: document.getElementById("onlineUsers"),
+        ordersProcessing: document.getElementById("ordersProcessing"),
+        avgSession: document.getElementById("avgSession"),
+        openTickets: document.getElementById("openTickets"),
+        goalText: document.getElementById("goalText"),
+        retentionText: document.getElementById("retentionText"),
+        goalBar: document.getElementById("goalBar"),
+        retentionBar: document.getElementById("retentionBar"),
+        liveTimestamp: document.getElementById("liveTimestamp"),
+        sidebarHealthText: document.getElementById("sidebarHealthText"),
+        sidebarHealthBar: document.getElementById("sidebarHealthBar"),
+        navLinks: document.getElementById("navLinks"),
+      };
+
+      function buildTimeLabels(count) {
+        const list = [];
+        const now = new Date();
+        for (let i = count - 1; i >= 0; i--) {
+          const d = new Date(now.getTime() - i * 5 * 60000);
+          list.push(
+            d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }),
+          );
+        }
+        return list;
+      }
+
+      function getVar(name) {
+        return getComputedStyle(document.documentElement)
+          .getPropertyValue(name)
+          .trim();
+      }
+
+      function hexToRgba(hex, alpha) {
+        const clean = hex.replace("#", "").trim();
+        const full =
+          clean.length === 3
+            ? clean
+                .split("")
+                .map((c) => c + c)
+                .join("")
+            : clean;
+        const int = parseInt(full, 16);
+        const r = (int >> 16) & 255;
+        const g = (int >> 8) & 255;
+        const b = int & 255;
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+      }
+
+      function initials(name) {
+        return name
+          .split(" ")
+          .map((n) => n[0])
+          .slice(0, 2)
+          .join("")
+          .toUpperCase();
+      }
+
+      function formatCurrencyCompact(value) {
+        return new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+          notation: "compact",
+          maximumFractionDigits: 1,
+        }).format(value);
+      }
+
+      function formatNumber(value) {
+        return new Intl.NumberFormat("en-US").format(value);
+      }
+
+      function formatDate(dateStr) {
+        return new Date(dateStr).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        });
+      }
+
+      function formatDuration(seconds) {
+        const m = Math.floor(seconds / 60);
+        const s = seconds % 60;
+        return `${m}m ${String(s).padStart(2, "0")}s`;
+      }
+
+      function sanitizeStatus(status) {
+        return "status-" + status.toLowerCase().replace(/\s+/g, "-");
+      }
+
+      function bump(el) {
+        el.classList.remove("flash");
+        void el.offsetWidth;
+        el.classList.add("flash");
+      }
+
+      function updateThemeButton() {
+        const dark = els.html.getAttribute("data-theme") === "dark";
+        els.themeIcon.textContent = dark ? "☀" : "☾";
+        els.themeLabel.textContent = dark ? "Light" : "Dark";
+      }
+
+      function applyStats() {
+        els.revenueValue.textContent = formatCurrencyCompact(state.revenue);
+        els.usersValue.textContent = formatNumber(state.newUsers);
+        els.conversionValue.textContent = `${state.conversion.toFixed(2)}%`;
+        els.healthValue.textContent = `${state.health.toFixed(2)}%`;
+        els.onlineUsers.textContent = formatNumber(state.online);
+        els.ordersProcessing.textContent = formatNumber(state.orders);
+        els.avgSession.textContent = formatDuration(state.sessionSec);
+        els.openTickets.textContent = formatNumber(state.tickets);
+        els.goalText.textContent = `${state.goal}%`;
+        els.retentionText.textContent = `${state.retention}%`;
+        els.goalBar.style.width = `${state.goal}%`;
+        els.retentionBar.style.width = `${state.retention}%`;
+        els.sidebarHealthText.textContent = `${state.health.toFixed(2)}%`;
+        els.sidebarHealthBar.style.width = `${Math.min(100, state.health)}%`;
+        els.liveTimestamp.textContent = `Updated ${new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}`;
+      }
+
+      function filteredUsers() {
+        return users.filter((user) => {
+          const q = state.query.toLowerCase();
+          const matchesQuery =
+            !q ||
+            [user.name, user.email, user.location].some((v) =>
+              v.toLowerCase().includes(q),
+            );
+          const matchesRole = state.role === "All" || user.role === state.role;
+          return matchesQuery && matchesRole;
+        });
+      }
+
+      function renderUsers() {
+        const data = filteredUsers();
+        els.userTableBody.innerHTML = "";
+        els.userCountLabel.textContent = `${data.length} / ${users.length}`;
+
+        if (!data.length) {
+          els.emptyState.style.display = "block";
+          return;
+        }
+
+        els.emptyState.style.display = "none";
+
+        data.forEach((user) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+          <td>
+            <div class="user-cell">
+              <div class="avatar">${initials(user.name)}</div>
+              <div class="user-meta">
+                <strong>${user.name}</strong>
+                <span>${user.email}</span>
+              </div>
+            </div>
+          </td>
+          <td><span class="badge role-badge">${user.role}</span></td>
+          <td><span class="badge ${sanitizeStatus(user.status)}">${user.status}</span></td>
+          <td>${formatDate(user.joined)}</td>
+          <td>${user.location}</td>
+          <td>
+            <div class="actions">
+              <button class="mini-btn" data-action="status" data-id="${user.id}">Change</button>
+              <button class="mini-btn danger" data-action="delete" data-id="${user.id}">Delete</button>
+            </div>
+          </td>
+        `;
+          els.userTableBody.appendChild(tr);
+        });
+
+        updateRoleChart();
+      }
+
+      function renderActivity() {
+        els.activityList.innerHTML = "";
+        activities.slice(0, 6).forEach((item) => {
+          const wrap = document.createElement("div");
+          wrap.className = "timeline-item";
+          wrap.innerHTML = `
+          <div class="timeline-dot">${item.icon}</div>
+          <div>
+            <strong>${item.title}</strong>
+            <p>${item.text}</p>
+            <time>${item.time}</time>
+          </div>
+        `;
+          els.activityList.appendChild(wrap);
+        });
+      }
+
+      function addActivity(title, text, icon = "✦") {
+        activities.unshift({ icon, title, text, time: "Just now" });
+        if (activities.length > 8) activities.pop();
+        renderActivity();
+      }
+
+      function getRoleCounts() {
+        const roles = ["Admin", "Manager", "Analyst", "Support"];
+        return roles.map((role) => users.filter((u) => u.role === role).length);
+      }
+
+      function chartCommonScales() {
+        return {
+          x: {
+            grid: {
+              color: hexToRgba(getVar("--accent-2"), 0.1),
+              drawBorder: false,
+            },
+            ticks: { color: getVar("--muted") },
+          },
+          y: {
+            grid: {
+              color: hexToRgba(getVar("--accent"), 0.1),
+              drawBorder: false,
+            },
+            ticks: { color: getVar("--muted") },
+          },
+        };
+      }
+
+      function buildCharts() {
+        if (lineChart) lineChart.destroy();
+        if (doughnutChart) doughnutChart.destroy();
+        if (barChart) barChart.destroy();
+
+        const accent = getVar("--accent");
+        const accent2 = getVar("--accent-2");
+        const text = getVar("--text");
+        const muted = getVar("--muted");
+
+        Chart.defaults.color = muted;
+        Chart.defaults.font.family = "Inter, system-ui, sans-serif";
+
+        const lineCtx = document
+          .getElementById("revenueChart")
+          .getContext("2d");
+        const gradient = lineCtx.createLinearGradient(0, 0, 0, 300);
+        gradient.addColorStop(0, hexToRgba(accent, 0.34));
+        gradient.addColorStop(1, hexToRgba(accent2, 0.02));
+
+        lineChart = new Chart(lineCtx, {
+          type: "line",
+          data: {
+            labels: chartLabels,
+            datasets: [
+              {
+                label: "Revenue",
+                data: revenueSeries,
+                fill: true,
+                backgroundColor: gradient,
+                borderColor: accent,
+                borderWidth: 3,
+                pointRadius: 0,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: accent2,
+                pointHoverBorderColor: text,
+                tension: 0.42,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: getVar("--surface-solid"),
+                titleColor: text,
+                bodyColor: muted,
+                borderColor: hexToRgba(accent2, 0.16),
+                borderWidth: 1,
+                padding: 12,
+                displayColors: false,
+                callbacks: {
+                  label: (ctx) => `$${ctx.parsed.y}k`,
+                },
+              },
+            },
+            scales: chartCommonScales(),
+          },
+        });
+
+        doughnutChart = new Chart(document.getElementById("rolesChart"), {
+          type: "doughnut",
+          data: {
+            labels: ["Admin", "Manager", "Analyst", "Support"],
+            datasets: [
+              {
+                data: getRoleCounts(),
+                borderWidth: 0,
+                hoverOffset: 8,
+                backgroundColor: [
+                  accent,
+                  accent2,
+                  hexToRgba(accent, 0.65),
+                  hexToRgba(accent2, 0.65),
+                ],
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: "68%",
+            plugins: {
+              legend: {
+                position: "bottom",
+                labels: {
+                  color: muted,
+                  usePointStyle: true,
+                  pointStyle: "circle",
+                  padding: 18,
+                },
+              },
+              tooltip: {
+                backgroundColor: getVar("--surface-solid"),
+                titleColor: text,
+                bodyColor: muted,
+                borderColor: hexToRgba(accent, 0.16),
+                borderWidth: 1,
+              },
+            },
+          },
+        });
+
+        barChart = new Chart(document.getElementById("productivityChart"), {
+          type: "bar",
+          data: {
+            labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+            datasets: [
+              {
+                label: "Output",
+                data: productivitySeries,
+                borderRadius: 12,
+                borderSkipped: false,
+                backgroundColor: productivitySeries.map((_, i) =>
+                  i % 2 === 0
+                    ? hexToRgba(accent, 0.85)
+                    : hexToRgba(accent2, 0.8),
+                ),
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: getVar("--surface-solid"),
+                titleColor: text,
+                bodyColor: muted,
+                borderColor: hexToRgba(accent2, 0.16),
+                borderWidth: 1,
+              },
+            },
+            scales: chartCommonScales(),
+          },
+        });
+      }
+
+      function updateRoleChart() {
+        if (!doughnutChart) return;
+        doughnutChart.data.datasets[0].data = getRoleCounts();
+        doughnutChart.update();
+      }
+
+      function toggleTheme() {
+        const next =
+          els.html.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        els.html.setAttribute("data-theme", next);
+        localStorage.setItem("dashboard-theme", next);
+        updateThemeButton();
+        buildCharts();
+      }
+
+      function openSidebar() {
+        els.sidebar.classList.add("open");
+        els.overlay.classList.add("show");
+      }
+
+      function closeSidebar() {
+        els.sidebar.classList.remove("open");
+        els.overlay.classList.remove("show");
+      }
+
+      function openModal() {
+        els.userModal.classList.add("show");
+      }
+
+      function closeModal() {
+        els.userModal.classList.remove("show");
+        els.userForm.reset();
+      }
+
+      function updateNavActive() {
+        const sections = [
+          ...document.querySelectorAll("section[id], .panel[id]"),
+        ];
+        let current = "overview";
+        const scrollY = window.scrollY + 160;
+
+        sections.forEach((sec) => {
+          if (scrollY >= sec.offsetTop) current = sec.id;
+        });
+
+        [...els.navLinks.querySelectorAll(".nav-link")].forEach((link) => {
+          link.classList.toggle(
+            "active",
+            link.getAttribute("href") === `#${current}`,
+          );
+        });
+      }
+
+      function randomBetween(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      function syncRealtime() {
+        state.revenue += randomBetween(600, 2400);
+        state.newUsers += randomBetween(2, 8);
+        state.conversion = Math.max(
+          4.7,
+          Math.min(
+            9.4,
+            +(state.conversion + (Math.random() - 0.45) * 0.22).toFixed(2),
+          ),
+        );
+        state.health = Math.max(
+          98.9,
+          Math.min(
+            100,
+            +(state.health + (Math.random() - 0.5) * 0.04).toFixed(2),
+          ),
+        );
+        state.online = Math.max(180, state.online + randomBetween(-18, 26));
+        state.orders = Math.max(22, state.orders + randomBetween(-5, 7));
+        state.sessionSec = Math.max(
+          180,
+          state.sessionSec + randomBetween(-9, 11),
+        );
+        state.tickets = Math.max(5, state.tickets + randomBetween(-2, 3));
+        state.goal = Math.max(
+          58,
+          Math.min(100, state.goal + randomBetween(-1, 3)),
+        );
+        state.retention = Math.max(
+          65,
+          Math.min(98, state.retention + randomBetween(-2, 2)),
+        );
+
+        revenueSeries.shift();
+        revenueSeries.push(
+          Math.max(
+            55,
+            Math.min(
+              118,
+              revenueSeries[revenueSeries.length - 1] + randomBetween(-4, 7),
+            ),
+          ),
+        );
+        chartLabels.shift();
+        chartLabels.push(
+          new Date().toLocaleTimeString([], {
+            hour: "numeric",
+            minute: "2-digit",
+          }),
+        );
+
+        productivitySeries = productivitySeries.map((v) =>
+          Math.max(58, Math.min(100, v + randomBetween(-3, 4))),
+        );
+
+        applyStats();
+
+        [
+          "revenueValue",
+          "usersValue",
+          "conversionValue",
+          "healthValue",
+        ].forEach((id) => bump(els[id]));
+
+        lineChart.data.labels = chartLabels;
+        lineChart.data.datasets[0].data = revenueSeries;
+        lineChart.update();
+
+        barChart.data.datasets[0].data = productivitySeries;
+        barChart.data.datasets[0].backgroundColor = productivitySeries.map(
+          (_, i) =>
+            i % 2 === 0
+              ? hexToRgba(getVar("--accent"), 0.85)
+              : hexToRgba(getVar("--accent-2"), 0.8),
+        );
+        barChart.update();
+
+        const feed = [
+          [
+            "Traffic surge recorded",
+            `Active sessions climbed to ${formatNumber(state.online)} visitors in the latest 5-minute window.`,
+            "↗",
+          ],
+          [
+            "Processing load updated",
+            `${formatNumber(state.orders)} orders are currently moving through checkout pipelines.`,
+            "◌",
+          ],
+          [
+            "Retention model refreshed",
+            `Confidence score now sits at ${state.retention}% after engagement recalculation.`,
+            "✦",
+          ],
+          [
+            "Support pulse changed",
+            `Open tickets are now ${formatNumber(state.tickets)} with steady queue movement.`,
+            "◎",
+          ],
+        ];
+
+        if (Math.random() > 0.45) {
+          const item = feed[randomBetween(0, feed.length - 1)];
+          addActivity(item[0], item[1], item[2]);
+        }
+      }
+
+      els.themeToggle.addEventListener("click", toggleTheme);
+      els.menuBtn.addEventListener("click", openSidebar);
+      els.overlay.addEventListener("click", closeSidebar);
+      els.addUserBtn.addEventListener("click", openModal);
+      els.closeModal.addEventListener("click", closeModal);
+      els.cancelModal.addEventListener("click", closeModal);
+
+      els.userModal.addEventListener("click", (e) => {
+        if (e.target === els.userModal) closeModal();
+      });
+
+      els.globalSearch.addEventListener("input", (e) => {
+        state.query = e.target.value.trim();
+        els.userSearch.value = state.query;
+        renderUsers();
+      });
+
+      els.userSearch.addEventListener("input", (e) => {
+        state.query = e.target.value.trim();
+        els.globalSearch.value = state.query;
+        renderUsers();
+      });
+
+      els.roleFilter.addEventListener("change", (e) => {
+        state.role = e.target.value;
+        renderUsers();
+      });
+
+      els.userTableBody.addEventListener("click", (e) => {
+        const btn = e.target.closest("button[data-action]");
+        if (!btn) return;
+
+        const id = Number(btn.dataset.id);
+        const index = users.findIndex((u) => u.id === id);
+        if (index === -1) return;
+
+        if (btn.dataset.action === "delete") {
+          const removed = users.splice(index, 1)[0];
+          addActivity(
+            "User removed",
+            `${removed.name} was removed from the workspace directory.`,
+            "✕",
+          );
+        }
+
+        if (btn.dataset.action === "status") {
+          const current = users[index].status;
+          const next =
+            statusCycle[
+              (statusCycle.indexOf(current) + 1) % statusCycle.length
+            ];
+          users[index].status = next;
+          addActivity(
+            "User status updated",
+            `${users[index].name} is now marked as ${next}.`,
+            "⟲",
+          );
+        }
+
+        renderUsers();
+      });
+
+      els.userForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById("nameInput").value.trim();
+        const email = document.getElementById("emailInput").value.trim();
+        const role = document.getElementById("roleInput").value;
+        const status = document.getElementById("statusInput").value;
+        const location = document.getElementById("locationInput").value.trim();
+
+        if (!name || !email || !location) return;
+
+        users.unshift({
+          id: Date.now(),
+          name,
+          email,
+          role,
+          status,
+          location,
+          joined: new Date().toISOString().slice(0, 10),
+        });
+
+        state.newUsers += 1;
+        applyStats();
+        renderUsers();
+        addActivity(
+          "New user created",
+          `${name} joined as ${role} from ${location}.`,
+          "＋",
+        );
+        closeModal();
+      });
+
+      [...document.querySelectorAll(".nav-link")].forEach((link) => {
+        link.addEventListener("click", () => {
+          [...document.querySelectorAll(".nav-link")].forEach((l) =>
+            l.classList.remove("active"),
+          );
+          link.classList.add("active");
+          closeSidebar();
+        });
+      });
+
+      window.addEventListener("scroll", updateNavActive);
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 1080) closeSidebar();
+      });
+
+      updateThemeButton();
+      applyStats();
+      renderUsers();
+      renderActivity();
+      buildCharts();
+      updateNavActive();
+
+      setInterval(syncRealtime, 4500);
+    </script>
+  </body>
+</html>
